@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class NewsScreen extends StatefulWidget {
+  static final String id = 'news_screen';
   @override
   State<StatefulWidget> createState() {
     return _NewsScreenState();
@@ -17,10 +17,7 @@ class _NewsScreenState extends State<NewsScreen> {
         title: Text('News Screen'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text('News Screen')
-      ),
+      body: Center(child: Text('News Screen')),
     );
   }
-
 }
