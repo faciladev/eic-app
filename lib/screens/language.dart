@@ -1,8 +1,7 @@
-import 'package:eicapp/screens/landing.dart';
+import 'package:eicapp/providers/language.dart';
+import 'package:eicapp/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:eicapp/models/language.dart';
 
 class LanguageScreen extends StatefulWidget {
   static final String id = 'language_screen';
@@ -22,6 +21,16 @@ class _LanguageScreenState extends State<LanguageScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Image.asset(
+                'assets/images/logo.jpg',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Text(
               'Select Language | 语',
               style: TextStyle(
@@ -37,53 +46,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
               margin: EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 children: <Widget>[
-                  Consumer<LanguageModel>(builder: (context, model, child) {
-                    return GestureDetector(
-                      child: Container(
-                        decoration:
-                            BoxDecoration(color: Theme.of(context).accentColor),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            _buildCountryImage(country: 'gb', width: 50.0),
-                            Text(
-                              'English',
-                              style: Theme.of(context).textTheme.title,
-                            ),
-                            Icon(Icons.navigate_next),
-                          ],
-                        ),
-                      ),
-                      onTap: () =>
-                          _languageHandler(context, model, Language.Chinese),
-                    );
-                  }),
+                  _buildLanguageOption(Language.English),
                   Divider(),
-                  Consumer<LanguageModel>(builder: (context, model, child) {
-                    return GestureDetector(
-                      child: Container(
-                        decoration:
-                            BoxDecoration(color: Theme.of(context).accentColor),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            _buildCountryImage(country: 'cn', width: 50.0),
-                            Text(
-                              '中文',
-                              style: Theme.of(context).textTheme.title,
-                            ),
-                            Icon(Icons.navigate_next),
-                          ],
-                        ),
-                      ),
-                      onTap: () =>
-                          _languageHandler(context, model, Language.Chinese),
-                    );
-                  }),
+                  _buildLanguageOption(Language.Chinese),
                 ],
               ),
             ),
@@ -91,6 +56,37 @@ class _LanguageScreenState extends State<LanguageScreen> {
         ),
       ),
     );
+  }
+
+  _buildLanguageOption(Language language) {
+    return Consumer<LanguageProvider>(builder: (context, model, _) {
+      String _countryCode, _languageTitle;
+      if (language == Language.Chinese) {
+        _countryCode = 'cn';
+        _languageTitle = '中文';
+      } else if (language == Language.English) {
+        _countryCode = 'gb';
+        _languageTitle = 'English';
+      }
+      return GestureDetector(
+        child: Container(
+          decoration: BoxDecoration(color: Theme.of(context).accentColor),
+          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _buildCountryImage(country: _countryCode, width: 50.0),
+              Text(
+                _languageTitle,
+                style: Theme.of(context).textTheme.title,
+              ),
+              Icon(Icons.navigate_next),
+            ],
+          ),
+        ),
+        onTap: () => _languageHandler(context, model, language),
+      );
+    });
   }
 
   Image _buildCountryImage({String country, double width}) {
@@ -103,6 +99,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   void _languageHandler(context, model, Language language) {
     model.selectLanguage(language);
-    Navigator.pushNamed(context, LandingScreen.id);
+    Navigator.pushNamed(context, HomeScreen.id);
   }
 }

@@ -1,18 +1,23 @@
+import 'package:eicapp/providers/language.dart';
+import 'package:eicapp/providers/news.dart';
 import 'package:eicapp/screens/home.dart';
 import 'package:eicapp/screens/landing.dart';
+import 'package:eicapp/screens/news.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:eicapp/models/language.dart';
 import 'package:eicapp/screens/language.dart';
-import 'package:eicapp/screens/news.dart';
+import 'package:eicapp/screens/news_list.dart';
 import 'package:eicapp/screens/feedback.dart';
 
 void main() => runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            builder: (context) => LanguageModel(),
+            builder: (context) => LanguageProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => NewsProvider(),
           )
         ],
         child: MyApp(),
@@ -42,10 +47,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LanguageScreen(),
         HomeScreen.id: (context) => HomeScreen(),
-        NewsScreen.id: (context) => NewsScreen(),
-        // '/feedback': (context) => FeedbackScreen(),
+        NewsListScreen.id: (context) => NewsListScreen(),
         FeedbackScreen.id: (context) => FeedbackScreen(),
         LandingScreen.id: (context) => LandingScreen(),
+        NewsScreen.id: (context) => NewsScreen(),
       },
     );
   }

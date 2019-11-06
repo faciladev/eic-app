@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LanguageModel extends ChangeNotifier {
+class LanguageProvider extends ChangeNotifier {
   Language _language;
 
   void selectLanguage(Language language) {

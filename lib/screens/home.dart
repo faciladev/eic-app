@@ -1,8 +1,8 @@
-import 'package:eicapp/models/language.dart';
+import 'package:eicapp/providers/language.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:eicapp/screens/news.dart';
+import 'package:eicapp/screens/news_list.dart';
 
 class HomeScreen extends StatefulWidget {
   static final String id = 'home_screen';
@@ -16,10 +16,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<LanguageModel>(
+    return Consumer<LanguageProvider>(
       builder: (context, model, child) {
         if (model.language == Language.English) {
-          return NewsScreen();
+          return NewsListScreen();
         } else {
           return Container();
         }
