@@ -14,9 +14,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   void _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      print(_email);
-      print(_subject);
-      print(_message);
     }
   }
 
@@ -26,7 +23,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'Send Feedback',
+          'Contact',
           style: TextStyle(
             fontFamily: Theme.of(context).textTheme.title.fontFamily,
           ),
@@ -37,9 +34,31 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                child: Card(
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(30),
+                    color: Theme.of(context).accentColor,
+                    child: DefaultTextStyle(
+                      child: Column(
+                        children: <Widget>[
+                          Text('Addis Ababa, Ethiopia'),
+                          Text('P.O. Box 2313'),
+                          Text('Tel: +251 11 551 0033'),
+                          Text('Fax: +251 11 551 4396'),
+                          Text('Email: info@eic.gov.et'),
+                        ],
+                      ),
+                      style: Theme.of(context).textTheme.subhead,
+                    ),
+                  ),
+                ),
+              ),
               Form(
                 key: _formKey,
                 child: Column(
@@ -88,10 +107,14 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       child: FlatButton(
                         padding: EdgeInsets.all(10.0),
                         onPressed: _submit,
-                        color: Colors.blue,
+                        color: Theme.of(context).accentColor,
                         child: Text(
                           'Send',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     )

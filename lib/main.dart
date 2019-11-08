@@ -1,8 +1,18 @@
+import 'package:eicapp/providers/country_profile.dart';
+import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/providers/language.dart';
 import 'package:eicapp/providers/news.dart';
+import 'package:eicapp/providers/sector.dart';
+import 'package:eicapp/screens/country_profile.dart';
+import 'package:eicapp/screens/country_profile_list.dart';
 import 'package:eicapp/screens/home.dart';
+import 'package:eicapp/screens/incentive.dart';
+import 'package:eicapp/screens/incentive_list.dart';
+import 'package:eicapp/screens/incentive_package_list.dart';
 import 'package:eicapp/screens/landing.dart';
 import 'package:eicapp/screens/news.dart';
+import 'package:eicapp/screens/sector.dart';
+import 'package:eicapp/screens/sector_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +28,15 @@ void main() => runApp(
           ),
           ChangeNotifierProvider(
             builder: (context) => NewsProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => IncentiveProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => SectorProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => CountryProfileProvider(),
           )
         ],
         child: MyApp(),
@@ -51,6 +70,14 @@ class MyApp extends StatelessWidget {
         FeedbackScreen.id: (context) => FeedbackScreen(),
         LandingScreen.id: (context) => LandingScreen(),
         NewsScreen.id: (context) => NewsScreen(),
+        IncentivePackageListScreen.id: (context) =>
+            IncentivePackageListScreen(),
+        IncentiveListScreen.id: (context) => IncentiveListScreen(),
+        IncentiveScreen.id: (context) => IncentiveScreen(),
+        SectorListScreen.id: (context) => SectorListScreen(),
+        SectorScreen.id: (context) => SectorScreen(),
+        CountryProfileListScreen.id: (context) => CountryProfileListScreen(),
+        CountryProfileScreen.id: (context) => CountryProfileScreen(),
       },
     );
   }

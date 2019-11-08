@@ -21,16 +21,16 @@ class _LanguageScreenState extends State<LanguageScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Image.asset(
-                'assets/images/logo.jpg',
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            //   child: Image.asset(
+            //     'assets/images/logo.jpg',
+            //     fit: BoxFit.fitWidth,
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 17,
+            // ),
             Text(
               'Select Language | 语',
               style: TextStyle(
