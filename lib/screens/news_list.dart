@@ -36,7 +36,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
           ),
           centerTitle: true,
         ),
-        endDrawer: MyDrawer(),
+        // endDrawer: MyDrawer(),
         body: RefreshIndicator(
           child: _buildAllNews(),
           onRefresh: () {

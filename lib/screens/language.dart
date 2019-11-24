@@ -1,4 +1,6 @@
-import 'package:eicapp/providers/language.dart';
+import 'package:eicapp/providers/chinese_page.dart';
+import 'package:eicapp/providers/setting.dart';
+// import 'package:eicapp/providers/language.dart';
 import 'package:eicapp/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,16 +23,16 @@ class _LanguageScreenState extends State<LanguageScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            //   child: Image.asset(
-            //     'assets/images/logo.jpg',
-            //     fit: BoxFit.fitWidth,
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 17,
-            // ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Image.asset(
+                'assets/images/logo.png',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            SizedBox(
+              height: 17,
+            ),
             Text(
               'Select Language | 语',
               style: TextStyle(
@@ -59,7 +61,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   }
 
   _buildLanguageOption(Language language) {
-    return Consumer<LanguageProvider>(builder: (context, model, _) {
+    return Consumer<SettingProvider>(builder: (context, model, _) {
       String _countryCode, _languageTitle;
       if (language == Language.Chinese) {
         _countryCode = 'cn';
@@ -97,8 +99,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
     );
   }
 
-  void _languageHandler(context, model, Language language) {
+  void _languageHandler(context, SettingProvider model, Language language) {
+    if (language == Language.Chinese) {
+      Provider.of<ChinesePageProvider>(context).fetchAllChinesePages();
+    }
     model.selectLanguage(language);
-    Navigator.pushNamed(context, HomeScreen.id);
+    Navigator.pushReplacementNamed(context, HomeScreen.id);
   }
 }

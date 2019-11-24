@@ -1,8 +1,12 @@
+import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/providers/incentive.dart';
-import 'package:eicapp/providers/language.dart';
 import 'package:eicapp/providers/news.dart';
 import 'package:eicapp/providers/sector.dart';
+import 'package:eicapp/providers/service.dart';
+import 'package:eicapp/providers/setting.dart';
+import 'package:eicapp/screens/bootstrap.dart';
+import 'package:eicapp/screens/chinese_page.dart';
 import 'package:eicapp/screens/country_profile.dart';
 import 'package:eicapp/screens/country_profile_list.dart';
 import 'package:eicapp/screens/home.dart';
@@ -13,6 +17,10 @@ import 'package:eicapp/screens/landing.dart';
 import 'package:eicapp/screens/news.dart';
 import 'package:eicapp/screens/sector.dart';
 import 'package:eicapp/screens/sector_list.dart';
+import 'package:eicapp/screens/service.dart';
+import 'package:eicapp/screens/service_list.dart';
+import 'package:eicapp/screens/setting.dart';
+import 'package:eicapp/screens/setting_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +31,9 @@ import 'package:eicapp/screens/feedback.dart';
 void main() => runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            builder: (context) => LanguageProvider(),
-          ),
+          // ChangeNotifierProvider(
+          //   builder: (context) => LanguageProvider(),
+          // ),
           ChangeNotifierProvider(
             builder: (context) => NewsProvider(),
           ),
@@ -37,6 +45,15 @@ void main() => runApp(
           ),
           ChangeNotifierProvider(
             builder: (context) => CountryProfileProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => ServiceProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => ChinesePageProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => SettingProvider(),
           )
         ],
         child: MyApp(),
@@ -64,7 +81,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LanguageScreen(),
+        '/': (context) => BootstrapScreen(),
+        BootstrapScreen.id: (context) => BootstrapScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         NewsListScreen.id: (context) => NewsListScreen(),
         FeedbackScreen.id: (context) => FeedbackScreen(),
@@ -78,6 +96,12 @@ class MyApp extends StatelessWidget {
         SectorScreen.id: (context) => SectorScreen(),
         CountryProfileListScreen.id: (context) => CountryProfileListScreen(),
         CountryProfileScreen.id: (context) => CountryProfileScreen(),
+        ServiceScreen.id: (context) => ServiceScreen(),
+        ServiceListScreen.id: (context) => ServiceListScreen(),
+        ChinesePageScreen.id: (context) => ChinesePageScreen(),
+        SettingListScreen.id: (context) => SettingListScreen(),
+        SettingScreen.id: (context) => SettingScreen(),
+        LanguageScreen.id: (context) => LanguageScreen(),
       },
     );
   }
