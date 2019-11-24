@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:eicapp/models/setting.dart';
 import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/home.dart';
 import 'package:eicapp/screens/language.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 class BootstrapScreen extends StatefulWidget {
   static final String id = 'bootstrap_screen';
@@ -13,6 +14,7 @@ class BootstrapScreen extends StatefulWidget {
 }
 
 class _BootstrapScreenState extends State<BootstrapScreen> {
+  bool loaded = false;
   @override
   void initState() {
     super.initState();
@@ -24,10 +26,49 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
         null) {
       await Provider.of<SettingProvider>(context, listen: false).loadSettings();
     }
+
+    Timer(Duration(seconds: 1), () {
+      setState(() {
+        loaded = true;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!loaded) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Image(
+                image: AssetImage('assets/images/logo.jpg'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            CircularProgressIndicator(),
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              'preparing your app',
+              style: Theme.of(context).textTheme.body1,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+          ],
+        ),
+      );
+    }
     return Consumer<SettingProvider>(
       builder: (context, model, _) {
         List<Setting> settings = model.allSettings;
@@ -40,27 +81,7 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
         } else {
           page = LanguageScreen();
         }
-        return SplashScreen(
-          seconds: 1,
-          navigateAfterSeconds: page,
-          title:
-              Text('Welcome to EIC', style: Theme.of(context).textTheme.title),
-          image: Image.asset('assets/images/logo.jpg'),
-          // backgroundGradient: LinearGradient(
-          //     colors: [Colors.cyan, Colors.blue],
-          //     begin: Alignment.topLeft,
-          //     end: Alignment.bottomRight),
-          backgroundColor: Colors.white,
-          // gradientBackground: LinearGradient(
-          //     colors: [Colors.cyan, Colors.blue],
-          //     begin: Alignment.topLeft,
-          //     end: Alignment.bottomRight),
-          styleTextUnderTheLoader: TextStyle(),
-          photoSize: 200.0,
-          loadingText: Text('preparing your app'),
-          onClick: () {},
-          loaderColor: Colors.red,
-        );
+        return page;
       },
     );
   }
