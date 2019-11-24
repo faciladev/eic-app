@@ -4,6 +4,7 @@ import 'package:eicapp/screens/home.dart';
 import 'package:eicapp/screens/language.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 class BootstrapScreen extends StatefulWidget {
   static final String id = 'bootstrap_screen';
@@ -22,35 +23,45 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
     if (Provider.of<SettingProvider>(context, listen: false).allSettings ==
         null) {
       await Provider.of<SettingProvider>(context, listen: false).loadSettings();
-      List<Setting> settings =
-          Provider.of<SettingProvider>(context, listen: false).allSettings;
-
-      if (settings != null &&
-          settings.length > 0 &&
-          settings.any((Setting setting) => setting.name == 'language')) {
-        Navigator.pushReplacementNamed(context, HomeScreen.id);
-      } else {
-        Navigator.pushReplacementNamed(context, LanguageScreen.id);
-      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/logo.png'),
-              fit: BoxFit.fitWidth,
-            ),
-            color: Theme.of(context).primaryColor),
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
+    return Consumer<SettingProvider>(
+      builder: (context, model, _) {
+        List<Setting> settings = model.allSettings;
+        Widget page;
+
+        if (settings != null &&
+            settings.length > 0 &&
+            settings.any((Setting setting) => setting.name == 'language')) {
+          page = HomeScreen();
+        } else {
+          page = LanguageScreen();
+        }
+        return SplashScreen(
+          seconds: 1,
+          navigateAfterSeconds: page,
+          title:
+              Text('Welcome to EIC', style: Theme.of(context).textTheme.title),
+          image: Image.asset('assets/images/logo.jpg'),
+          // backgroundGradient: LinearGradient(
+          //     colors: [Colors.cyan, Colors.blue],
+          //     begin: Alignment.topLeft,
+          //     end: Alignment.bottomRight),
+          backgroundColor: Colors.white,
+          // gradientBackground: LinearGradient(
+          //     colors: [Colors.cyan, Colors.blue],
+          //     begin: Alignment.topLeft,
+          //     end: Alignment.bottomRight),
+          styleTextUnderTheLoader: TextStyle(),
+          photoSize: 200.0,
+          loadingText: Text('preparing your app'),
+          onClick: () {},
+          loaderColor: Colors.red,
+        );
+      },
     );
   }
 }
