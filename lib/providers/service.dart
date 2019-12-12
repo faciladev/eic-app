@@ -9,7 +9,8 @@ class ServiceProvider extends ChangeNotifier {
   Service selectedService;
 
   Future<void> fetchAllServices() async {
-    final response = await http.get('http://10.0.2.2:3000/services');
+    final response = await http.get(
+        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/services');
 
     if (response.statusCode == 200) {
       allServices = jsonDecode(response.body)

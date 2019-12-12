@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/providers/country_profile.dart';
+import 'package:eicapp/providers/feedback.dart';
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/providers/news.dart';
 import 'package:eicapp/providers/sector.dart';
@@ -54,6 +55,9 @@ void main() => runApp(
           ),
           ChangeNotifierProvider(
             builder: (context) => SettingProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => FeedbackProvider(),
           )
         ],
         child: MyApp(),

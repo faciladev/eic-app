@@ -9,7 +9,8 @@ class NewsProvider extends ChangeNotifier {
   News selectedNews;
 
   Future<void> fetchAllNews() async {
-    final response = await http.get('http://10.0.2.2:3000/news');
+    final response = await http.get(
+        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/news?filter[limit]=10');
 
     if (response.statusCode == 200) {
       allNews =

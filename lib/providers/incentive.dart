@@ -11,7 +11,8 @@ class IncentiveProvider extends ChangeNotifier {
   List<String> _packages = [];
 
   Future<void> fetchAllIncentives() async {
-    final response = await http.get('http://10.0.2.2:3000/incentives');
+    final response = await http.get(
+        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/incentives');
 
     if (response.statusCode == 200) {
       allIncentives = jsonDecode(response.body)

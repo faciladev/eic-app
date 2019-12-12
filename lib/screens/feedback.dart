@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:eicapp/models/feedback.dart';
+import 'package:eicapp/providers/feedback.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FeedbackScreen extends StatefulWidget {
   static final String id = 'feedback_screen';
@@ -11,9 +16,29 @@ class FeedbackScreen extends StatefulWidget {
 class _FeedbackScreenState extends State<FeedbackScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email, _message, _subject;
-  void _submit() {
+  bool sent = false;
+  bool sending = false;
+  void _submit() async {
     if (_formKey.currentState.validate()) {
+      setState(() {
+        sending = true;
+      });
       _formKey.currentState.save();
+      FeedbackModel feedback =
+          FeedbackModel(from: _email, message: _message, subject: _subject);
+      sent = await Provider.of<FeedbackProvider>(context, listen: false)
+          .sendEmail(feedback);
+      if (sent) {
+        _formKey.currentState.reset();
+        Timer(Duration(seconds: 1), () {
+          setState(() {
+            sent = true;
+          });
+        });
+      }
+      setState(() {
+        sending = false;
+      });
     }
   }
 
@@ -104,25 +129,35 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     ),
                     Container(
                       width: 250.0,
-                      child: FlatButton(
-                        padding: EdgeInsets.all(10.0),
-                        onPressed: _submit,
-                        color: Theme.of(context).accentColor,
-                        child: Text(
-                          'Send',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
+                      child: buildSendButton(context),
                     )
                   ],
                 ),
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSendButton(BuildContext context) {
+    if (sending) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return FlatButton(
+      padding: EdgeInsets.all(10.0),
+      onPressed: _submit,
+      color: Theme.of(context).accentColor,
+      child: Text(
+        'Send',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
         ),
       ),
     );

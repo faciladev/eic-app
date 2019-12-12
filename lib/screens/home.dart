@@ -1,6 +1,5 @@
 import 'package:eicapp/models/chinese_page.dart';
 import 'package:eicapp/providers/chinese_page.dart';
-// import 'package:eicapp/providers/language.dart';
 import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/chinese_page.dart';
 import 'package:eicapp/screens/feedback.dart';
@@ -11,8 +10,6 @@ import 'package:eicapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import 'country_profile_list.dart';
 
@@ -43,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, model, child) {
         String pageTitle;
         if (model.language == Language.English) {
-          pageTitle = 'Ethiopian Investment Commision';
+          pageTitle = 'EIC';
         } else if (model.language == Language.Chinese) {
           pageTitle = 'EIC 中文';
         }
@@ -173,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Container()
                   : Icon(
                       iconData,
-                      size: 70.0,
+                      size: 50.0,
                       color: color,
                     ),
               SizedBox(
@@ -182,7 +179,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 title,
                 style: TextStyle(
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: Theme.of(context).textTheme.title.fontFamily,
                     fontSize: 17.0,
                     color: Colors.black54),
               )

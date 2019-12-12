@@ -9,7 +9,8 @@ class SectorProvider extends ChangeNotifier {
   Sector selectedSector;
 
   Future<void> fetchAllSectors() async {
-    final response = await http.get('http://10.0.2.2:3000/sectors');
+    final response = await http.get(
+        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/sectors');
 
     if (response.statusCode == 200) {
       allSectors = jsonDecode(response.body)
