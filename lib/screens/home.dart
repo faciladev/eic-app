@@ -40,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, model, child) {
         String pageTitle;
         if (model.language == Language.English) {
-          pageTitle = 'EIC';
+          pageTitle = 'Invest in Ethiopia';
         } else if (model.language == Language.Chinese) {
-          pageTitle = 'EIC 中文';
+          pageTitle = '投资埃塞俄比亚';
         }
 
         // return NewsListScreen();
