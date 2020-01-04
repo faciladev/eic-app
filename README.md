@@ -1,4 +1,4 @@
-# eicapp
+# invest_ethiopia
 
 A new Flutter application.
 
