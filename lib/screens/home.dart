@@ -4,8 +4,10 @@ import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/chinese_page.dart';
 import 'package:eicapp/screens/feedback.dart';
 import 'package:eicapp/screens/incentive_package_list.dart';
+import 'package:eicapp/screens/opportunity_list.dart';
 import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service_list.dart';
+import 'package:eicapp/screens/step_list.dart';
 import 'package:eicapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -92,12 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Opportunities',
             iconData: FontAwesomeIcons.solidLightbulb,
             color: Colors.redAccent,
-            screenId: CountryProfileListScreen.id),
+            screenId: OpportunityListScreen.id),
         _buildMenuItem(context,
             title: 'Steps',
             iconData: FontAwesomeIcons.paw,
             color: Colors.tealAccent,
-            screenId: CountryProfileListScreen.id),
+            screenId: StepListScreen.id),
         _buildMenuItem(context,
             title: 'Contact',
             iconData: FontAwesomeIcons.phone,

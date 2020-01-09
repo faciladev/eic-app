@@ -60,13 +60,11 @@ class _ServiceScreenState extends State<ServiceScreen> {
         return Padding(
           padding: EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Icon(FontAwesomeIcons.checkSquare),
-            title: Text(
-              requirement['DescriptionEnglish'],
-              style: TextStyle(
-                  fontFamily: Theme.of(context).textTheme.title.fontFamily),
-            ),
-          ),
+              leading: Icon(FontAwesomeIcons.checkSquare),
+              title: Text(
+                requirement['DescriptionEnglish'],
+                style: Theme.of(context).textTheme.body1,
+              )),
         );
       }).toList(),
     );

@@ -78,10 +78,7 @@ class _IncentiveScreenState extends State<IncentiveScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 entryValue,
-                style: TextStyle(
-                  fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                  fontSize: 16,
-                ),
+                style: Theme.of(context).textTheme.body1,
               ),
             ),
           ],

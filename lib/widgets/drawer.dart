@@ -5,9 +5,11 @@ import 'package:eicapp/screens/country_profile_list.dart';
 import 'package:eicapp/screens/feedback.dart';
 import 'package:eicapp/screens/incentive_package_list.dart';
 import 'package:eicapp/screens/news_list.dart';
+import 'package:eicapp/screens/opportunity_list.dart';
 import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/setting_list.dart';
+import 'package:eicapp/screens/step_list.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -84,12 +86,12 @@ class MyDrawer extends StatelessWidget {
         _buildDrawerItem(
             context: context,
             itemName: 'Investment Opportunities',
-            screenId: FeedbackScreen.id,
+            screenId: OpportunityListScreen.id,
             iconData: FontAwesomeIcons.solidLightbulb),
         _buildDrawerItem(
             context: context,
             itemName: 'Steps',
-            screenId: FeedbackScreen.id,
+            screenId: StepListScreen.id,
             iconData: FontAwesomeIcons.paw),
         _buildDrawerItem(
             context: context,

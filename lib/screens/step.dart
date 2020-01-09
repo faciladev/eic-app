@@ -1,25 +1,26 @@
-import 'package:eicapp/providers/country_profile.dart';
+import 'package:eicapp/providers/step.dart';
 import 'package:eicapp/util/ui_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
-class CountryProfileScreen extends StatefulWidget {
-  static final String id = 'country_profile_screen';
+class StepScreen extends StatefulWidget {
+  static final String id = 'step_screen';
   @override
   State<StatefulWidget> createState() {
-    return _CountryProfileScreenState();
+    return _StepScreenState();
   }
 }
 
-class _CountryProfileScreenState extends State<CountryProfileScreen> {
+class _StepScreenState extends State<StepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Consumer<CountryProfileProvider>(
+        title: Consumer<StepProvider>(
           builder: (context, model, _) {
             return Text(
-              model.selectedCountryProfile.name,
+              model.selectedStep?.name,
               style: TextStyle(
                 fontFamily: Theme.of(context).textTheme.title.fontFamily,
                 fontWeight: FontWeight.bold,
@@ -37,7 +38,7 @@ class _CountryProfileScreenState extends State<CountryProfileScreen> {
       ),
       body: WillPopScope(
         child: SingleChildScrollView(
-          child: Consumer<CountryProfileProvider>(
+          child: Consumer<StepProvider>(
             builder: (context, model, _) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,15 +51,7 @@ class _CountryProfileScreenState extends State<CountryProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            model.selectedCountryProfile.name,
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                        ),
-                        buildNestedContent(
-                            model.selectedCountryProfile.content, context)
+                        buildNestedContent(model.selectedStep.content, context)
                       ],
                     ),
                   ),
@@ -68,8 +61,7 @@ class _CountryProfileScreenState extends State<CountryProfileScreen> {
           ),
         ),
         onWillPop: () {
-          Provider.of<CountryProfileProvider>(context, listen: false)
-              .unselectCountryProfile();
+          Provider.of<StepProvider>(context, listen: false).unselectStep();
           return Future.value(true);
         },
       ),

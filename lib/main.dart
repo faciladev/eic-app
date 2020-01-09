@@ -3,9 +3,11 @@ import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/providers/feedback.dart';
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/providers/news.dart';
+import 'package:eicapp/providers/opportunity.dart';
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/providers/service.dart';
 import 'package:eicapp/providers/setting.dart';
+import 'package:eicapp/providers/step.dart';
 import 'package:eicapp/screens/bootstrap.dart';
 import 'package:eicapp/screens/chinese_page.dart';
 import 'package:eicapp/screens/country_profile.dart';
@@ -16,12 +18,16 @@ import 'package:eicapp/screens/incentive_list.dart';
 import 'package:eicapp/screens/incentive_package_list.dart';
 import 'package:eicapp/screens/landing.dart';
 import 'package:eicapp/screens/news.dart';
+import 'package:eicapp/screens/opportunity.dart';
+import 'package:eicapp/screens/opportunity_list.dart';
 import 'package:eicapp/screens/sector.dart';
 import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service.dart';
 import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/setting.dart';
 import 'package:eicapp/screens/setting_list.dart';
+import 'package:eicapp/screens/step.dart';
+import 'package:eicapp/screens/step_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +64,12 @@ void main() => runApp(
           ),
           ChangeNotifierProvider(
             builder: (context) => FeedbackProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => OpportunityProvider(),
+          ),
+          ChangeNotifierProvider(
+            builder: (context) => StepProvider(),
           )
         ],
         child: MyApp(),
@@ -78,8 +90,12 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           title: TextStyle(
             fontFamily: 'Optima',
-            fontSize: 18.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
+          ),
+          body1: TextStyle(
+            fontFamily: 'Serif',
+            fontSize: 18.0,
           ),
         ),
       ),
@@ -106,6 +122,10 @@ class MyApp extends StatelessWidget {
         SettingListScreen.id: (context) => SettingListScreen(),
         SettingScreen.id: (context) => SettingScreen(),
         LanguageScreen.id: (context) => LanguageScreen(),
+        OpportunityListScreen.id: (context) => OpportunityListScreen(),
+        OpportunityScreen.id: (context) => OpportunityScreen(),
+        StepListScreen.id: (context) => StepListScreen(),
+        StepScreen.id: (context) => StepScreen()
       },
     );
   }

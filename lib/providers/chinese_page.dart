@@ -11,6 +11,7 @@ class ChinesePageProvider extends ChangeNotifier {
   Future<void> fetchAllChinesePages() async {
     final response = await http.get(
         'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/ChinesePages');
+    // final response = await http.get('http://10.0.2.2:3000/ChinesePages');
 
     if (response.statusCode == 200) {
       allChinesePages = jsonDecode(utf8.decode(response.bodyBytes))

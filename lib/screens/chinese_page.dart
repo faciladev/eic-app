@@ -1,4 +1,5 @@
 import 'package:eicapp/providers/chinese_page.dart';
+import 'package:eicapp/util/ui_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -50,14 +51,15 @@ class _ChinesePageScreenState extends State<ChinesePageScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                          child: FadeInImage.memoryNetwork(
-                            fit: BoxFit.cover,
-                            placeholder: kTransparentImage,
-                            image: model.selectedChinesePage.image,
-                          ),
-                        ),
-                        _buildNestedContent(model.selectedChinesePage.content)
+                        // Container(
+                        //   child: FadeInImage.memoryNetwork(
+                        //     fit: BoxFit.cover,
+                        //     placeholder: kTransparentImage,
+                        //     image: model.selectedChinesePage.image,
+                        //   ),
+                        // ),
+                        buildNestedContent(
+                            model.selectedChinesePage.content, context)
                       ],
                     ),
                   ),
@@ -73,89 +75,5 @@ class _ChinesePageScreenState extends State<ChinesePageScreen> {
         },
       ),
     );
-  }
-
-  Widget _buildNestedContent(dynamic root) {
-    if (root == null) return Container();
-
-    List nodeStack = [];
-    List<Widget> body = [];
-    try {
-      Map<String, dynamic> mapData = root;
-      mapData.forEach((String key, dynamic value) {
-        nodeStack.add('__title__$key');
-        nodeStack.add(value);
-        nodeStack.add('__divider__');
-      });
-    } catch (e) {
-      List<dynamic> listData = root;
-      listData.forEach((item) {
-        nodeStack.add(item);
-      });
-    }
-
-    while (nodeStack.length > 0) {
-      var node = nodeStack.removeLast();
-      try {
-        Map<String, dynamic> mapData = node;
-        mapData.forEach((String key, dynamic value) {
-          nodeStack.add('__title__$key');
-          nodeStack.add(value);
-          nodeStack.add('__divider__');
-        });
-      } catch (e) {
-        try {
-          List<dynamic> listData = node;
-          listData.forEach((item) {
-            nodeStack.add(item);
-          });
-        } catch (e) {
-          String stringData = node;
-
-          if (stringData.startsWith('__title__')) {
-            stringData = stringData.replaceFirst('__title__', '');
-            if (stringData == 'text' || stringData == 'images') {
-              continue;
-            }
-            body.insert(
-                0,
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    stringData,
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                ));
-          } else if (stringData.startsWith('__divider__')) {
-            body.insert(
-                0,
-                SizedBox(
-                  height: 17.0,
-                ));
-          } else {
-            body.insert(
-              0,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  stringData,
-                  style: TextStyle(
-                    fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            );
-          }
-        }
-      }
-    }
-
-    return body.length > 0
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: body,
-          )
-        : Container();
   }
 }

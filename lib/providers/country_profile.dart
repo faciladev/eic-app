@@ -9,9 +9,9 @@ class CountryProfileProvider extends ChangeNotifier {
   CountryProfile selectedCountryProfile;
 
   Future<void> fetchAllCountryProfiles() async {
-    // final response = await http.get(
-    //     'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/country-profiles');
-    final response = await http.get('http://10.0.2.2:3000/country-profiles');
+    final response = await http.get(
+        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/country-profiles');
+    // final response = await http.get('http://10.0.2.2:3000/country-profiles');
     if (response.statusCode == 200) {
       allCountryProfiles = jsonDecode(response.body)
           .map((json) => CountryProfile.fromJson(json))
