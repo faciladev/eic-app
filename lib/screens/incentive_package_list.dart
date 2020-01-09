@@ -46,7 +46,7 @@ class _IncentivePackageListScreenState
   Widget _buildPackages() {
     return Consumer<IncentiveProvider>(
       builder: (context, incentive, child) {
-        if (incentive.packages == null) {
+        if (incentive.packages.length == 0) {
           return Center(child: CircularProgressIndicator());
         }
         return ListView.builder(

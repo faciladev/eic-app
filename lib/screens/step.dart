@@ -1,8 +1,7 @@
-import 'package:eicapp/providers/step.dart';
+import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/util/ui_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class StepScreen extends StatefulWidget {
   static final String id = 'step_screen';
@@ -17,7 +16,7 @@ class _StepScreenState extends State<StepScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Consumer<StepProvider>(
+        title: Consumer<CountryProfileProvider>(
           builder: (context, model, _) {
             return Text(
               model.selectedStep?.name,
@@ -38,7 +37,7 @@ class _StepScreenState extends State<StepScreen> {
       ),
       body: WillPopScope(
         child: SingleChildScrollView(
-          child: Consumer<StepProvider>(
+          child: Consumer<CountryProfileProvider>(
             builder: (context, model, _) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +60,8 @@ class _StepScreenState extends State<StepScreen> {
           ),
         ),
         onWillPop: () {
-          Provider.of<StepProvider>(context, listen: false).unselectStep();
+          Provider.of<CountryProfileProvider>(context, listen: false)
+              .unselectStep();
           return Future.value(true);
         },
       ),

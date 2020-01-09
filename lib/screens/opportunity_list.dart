@@ -1,6 +1,7 @@
-import 'package:eicapp/models/country_profile.dart';
+// import 'package:eicapp/models/country_profile.dart';
 import 'package:eicapp/models/opportunity.dart';
-import 'package:eicapp/providers/opportunity.dart';
+import 'package:eicapp/providers/country_profile.dart';
+// import 'package:eicapp/providers/opportunity.dart';
 import 'package:eicapp/screens/opportunity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +18,8 @@ class _OpportunityListScreenState extends State<OpportunityListScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<OpportunityProvider>(context, listen: false)
-        .fetchAllOpportunities(context);
+    Provider.of<CountryProfileProvider>(context, listen: false)
+        .fetchAllCountryProfiles();
   }
 
   @override
@@ -37,15 +38,15 @@ class _OpportunityListScreenState extends State<OpportunityListScreen> {
       body: RefreshIndicator(
         child: _buildOpportunities(),
         onRefresh: () {
-          return Provider.of<OpportunityProvider>(context, listen: false)
-              .fetchAllOpportunities(context);
+          return Provider.of<CountryProfileProvider>(context, listen: false)
+              .fetchAllCountryProfiles();
         },
       ),
     );
   }
 
   Widget _buildOpportunities() {
-    return Consumer<OpportunityProvider>(
+    return Consumer<CountryProfileProvider>(
       builder: (context, opportunity, child) {
         if (opportunity.allOpportunities == null) {
           return Center(child: CircularProgressIndicator());
@@ -76,7 +77,7 @@ class _OpportunityListScreenState extends State<OpportunityListScreen> {
   }
 
   void _selectOpportunity(Opportunity opportunity) {
-    Provider.of<OpportunityProvider>(context, listen: false)
+    Provider.of<CountryProfileProvider>(context, listen: false)
         .selectOpportunity(opportunity);
     Navigator.pushNamed(context, OpportunityScreen.id);
   }

@@ -3,11 +3,9 @@ import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/providers/feedback.dart';
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/providers/news.dart';
-import 'package:eicapp/providers/opportunity.dart';
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/providers/service.dart';
 import 'package:eicapp/providers/setting.dart';
-import 'package:eicapp/providers/step.dart';
 import 'package:eicapp/screens/bootstrap.dart';
 import 'package:eicapp/screens/chinese_page.dart';
 import 'package:eicapp/screens/country_profile.dart';
@@ -64,12 +62,6 @@ void main() => runApp(
           ),
           ChangeNotifierProvider(
             builder: (context) => FeedbackProvider(),
-          ),
-          ChangeNotifierProvider(
-            builder: (context) => OpportunityProvider(),
-          ),
-          ChangeNotifierProvider(
-            builder: (context) => StepProvider(),
           )
         ],
         child: MyApp(),

@@ -1,6 +1,5 @@
 import 'package:eicapp/models/step.dart';
-import 'package:eicapp/models/step.dart';
-import 'package:eicapp/providers/step.dart';
+import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/screens/step.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,8 @@ class _StepListScreenState extends State<StepListScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<StepProvider>(context, listen: false).fetchAllSteps(context);
+    Provider.of<CountryProfileProvider>(context, listen: false)
+        .fetchAllCountryProfiles();
   }
 
   @override
@@ -36,15 +36,15 @@ class _StepListScreenState extends State<StepListScreen> {
       body: RefreshIndicator(
         child: _buildSteps(),
         onRefresh: () {
-          return Provider.of<StepProvider>(context, listen: false)
-              .fetchAllSteps(context);
+          return Provider.of<CountryProfileProvider>(context, listen: false)
+              .fetchAllCountryProfiles();
         },
       ),
     );
   }
 
   Widget _buildSteps() {
-    return Consumer<StepProvider>(
+    return Consumer<CountryProfileProvider>(
       builder: (context, step, child) {
         if (step.allSteps == null) {
           return Center(child: CircularProgressIndicator());
@@ -74,7 +74,8 @@ class _StepListScreenState extends State<StepListScreen> {
   }
 
   void _selectStep(StepModel step) {
-    Provider.of<StepProvider>(context, listen: false).selectStep(step);
+    Provider.of<CountryProfileProvider>(context, listen: false)
+        .selectStep(step);
     Navigator.pushNamed(context, StepScreen.id);
   }
 }

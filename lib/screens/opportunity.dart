@@ -1,4 +1,5 @@
-import 'package:eicapp/providers/opportunity.dart';
+// import 'package:eicapp/providers/opportunity.dart';
+import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/util/ui_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Consumer<OpportunityProvider>(
+        title: Consumer<CountryProfileProvider>(
           builder: (context, model, _) {
             return Text(
               model.selectedOpportunity?.name,
@@ -38,7 +39,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
       ),
       body: WillPopScope(
         child: SingleChildScrollView(
-          child: Consumer<OpportunityProvider>(
+          child: Consumer<CountryProfileProvider>(
             builder: (context, model, _) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +63,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
           ),
         ),
         onWillPop: () {
-          Provider.of<OpportunityProvider>(context, listen: false)
+          Provider.of<CountryProfileProvider>(context, listen: false)
               .unselectOpportunity();
           return Future.value(true);
         },
