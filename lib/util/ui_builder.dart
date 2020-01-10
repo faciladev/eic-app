@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 Widget buildNestedContent(dynamic root, BuildContext context) {
   if (root == null) return Container();
@@ -78,14 +79,30 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
                 height: 17.0,
               ));
         } else {
+          Widget textOrImage;
+          if (stringData.toLowerCase().endsWith('.jpg') ||
+              stringData.toLowerCase().endsWith('.jpeg') ||
+              stringData.toLowerCase().endsWith('png') ||
+              stringData.toLowerCase().endsWith('gif')) {
+            textOrImage = Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FadeInImage.memoryNetwork(
+                fit: BoxFit.cover,
+                placeholder: kTransparentImage,
+                image: stringData,
+              ),
+            );
+          } else {
+            textOrImage = Text(
+              stringData,
+              style: Theme.of(context).textTheme.body1,
+            );
+          }
           body.insert(
             0,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                stringData,
-                style: Theme.of(context).textTheme.body1,
-              ),
+              child: textOrImage,
             ),
           );
         }

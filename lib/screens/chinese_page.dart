@@ -51,13 +51,13 @@ class _ChinesePageScreenState extends State<ChinesePageScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // Container(
-                        //   child: FadeInImage.memoryNetwork(
-                        //     fit: BoxFit.cover,
-                        //     placeholder: kTransparentImage,
-                        //     image: model.selectedChinesePage.image,
-                        //   ),
-                        // ),
+                        Container(
+                          child: FadeInImage.memoryNetwork(
+                            fit: BoxFit.cover,
+                            placeholder: kTransparentImage,
+                            image: model.selectedChinesePage.image,
+                          ),
+                        ),
                         buildNestedContent(
                             model.selectedChinesePage.content, context)
                       ],

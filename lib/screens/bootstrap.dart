@@ -25,13 +25,16 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
     if (Provider.of<SettingProvider>(context, listen: false).allSettings ==
         null) {
       await Provider.of<SettingProvider>(context, listen: false).loadSettings();
-    }
-
-    Timer(Duration(seconds: 1), () {
       setState(() {
         loaded = true;
       });
-    });
+    }
+
+    // Timer(Duration(microseconds: 100), () {
+    //   setState(() {
+    //     loaded = true;
+    //   });
+    // });
   }
 
   @override
@@ -48,23 +51,23 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: Image(
-                image: AssetImage('assets/images/logo.jpg'),
-                fit: BoxFit.fitWidth,
-              ),
-            ),
+            // Expanded(
+            //   child: Image(
+            //     image: AssetImage('assets/images/logo.jpg'),
+            //     fit: BoxFit.fitWidth,
+            //   ),
+            // ),
             CircularProgressIndicator(),
             SizedBox(
               height: 20.0,
             ),
             Text(
-              'preparing your app',
+              'Please wait while your app is configuring',
               style: Theme.of(context).textTheme.body1,
             ),
-            SizedBox(
-              height: 20.0,
-            ),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
           ],
         ),
       );
