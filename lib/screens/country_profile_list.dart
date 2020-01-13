@@ -1,8 +1,7 @@
 import 'package:eicapp/models/country_profile.dart';
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/screens/country_profile.dart';
-import 'package:eicapp/screens/sector.dart';
-import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,15 +24,9 @@ class _CountryProfileListScreenState extends State<CountryProfileListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Country Profile',
-          style: TextStyle(
-            fontFamily: Theme.of(context).textTheme.title.fontFamily,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+      appBar: MyAppBar(
+        context,
+        title: "Country Profile",
       ),
       // endDrawer: MyDrawer(),
       body: RefreshIndicator(
@@ -55,17 +48,32 @@ class _CountryProfileListScreenState extends State<CountryProfileListScreen> {
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return Card(
+            return Container(
+              margin: EdgeInsets.all(10.0),
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  stops: [0.4, 0.8],
+                  colors: <Color>[
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).secondaryHeaderColor
+                  ],
+                ),
+              ),
               child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                // contentPadding:
+                //     EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                 title: Text(
                   countryProfile.allCountryProfiles[index].name,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontWeight: FontWeight.bold, color: Colors.white),
                 ),
-                trailing: Icon(Icons.navigate_next),
+                trailing: Icon(
+                  Icons.navigate_next,
+                  color: Colors.white,
+                ),
                 onTap: () =>
                     _selectSector(countryProfile.allCountryProfiles[index]),
               ),

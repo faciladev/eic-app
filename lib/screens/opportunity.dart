@@ -1,6 +1,7 @@
 // import 'package:eicapp/providers/opportunity.dart';
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -16,26 +17,12 @@ class OpportunityScreen extends StatefulWidget {
 class _OpportunityScreenState extends State<OpportunityScreen> {
   @override
   Widget build(BuildContext context) {
+    String title =
+        Provider.of<CountryProfileProvider>(context).selectedOpportunity.name;
     return Scaffold(
-      appBar: AppBar(
-        title: Consumer<CountryProfileProvider>(
-          builder: (context, model, _) {
-            return Text(
-              model.selectedOpportunity?.name,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.bookmark_border),
-            onPressed: () {},
-          )
-        ],
+      appBar: MyAppBar(
+        context,
+        title: title,
       ),
       body: WillPopScope(
         child: SingleChildScrollView(

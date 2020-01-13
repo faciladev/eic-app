@@ -9,6 +9,7 @@ import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/step_list.dart';
 import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -50,15 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
         // return NewsListScreen();
         return Scaffold(
           backgroundColor: Colors.blueGrey[50],
-          appBar: AppBar(
-            title: Text(
-              pageTitle ?? '...',
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
+          appBar: MyAppBar(
+            context,
+            title: pageTitle ?? '...',
           ),
           drawer: MyDrawer(),
           body: Stack(

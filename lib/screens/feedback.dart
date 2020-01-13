@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eicapp/models/feedback.dart';
 import 'package:eicapp/providers/feedback.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,14 +47,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
-      appBar: AppBar(
-        title: Text(
-          'Contact',
-          style: TextStyle(
-            fontFamily: Theme.of(context).textTheme.title.fontFamily,
-          ),
-        ),
-        centerTitle: true,
+      appBar: MyAppBar(
+        context,
+        title: "Contact",
       ),
       body: SingleChildScrollView(
         child: Container(

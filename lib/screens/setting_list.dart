@@ -1,6 +1,7 @@
 // import 'package:eicapp/providers/language.dart';
 import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/setting.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,15 +24,9 @@ class SettingListScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              title,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
+          appBar: MyAppBar(
+            context,
+            title: title,
           ),
           body: ListView(
             children: <Widget>[

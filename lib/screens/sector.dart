@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -15,26 +16,11 @@ class SectorScreen extends StatefulWidget {
 class _SectorScreenState extends State<SectorScreen> {
   @override
   Widget build(BuildContext context) {
+    String title = Provider.of<SectorProvider>(context).selectedSector.name;
     return Scaffold(
-      appBar: AppBar(
-        title: Consumer<SectorProvider>(
-          builder: (context, model, _) {
-            return Text(
-              model.selectedSector?.name,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.bookmark_border),
-            onPressed: () {},
-          )
-        ],
+      appBar: MyAppBar(
+        context,
+        title: title,
       ),
       body: WillPopScope(
         child: SingleChildScrollView(

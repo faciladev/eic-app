@@ -1,4 +1,5 @@
 import 'package:eicapp/providers/service.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -15,26 +16,12 @@ class ServiceScreen extends StatefulWidget {
 class _ServiceScreenState extends State<ServiceScreen> {
   @override
   Widget build(BuildContext context) {
+    String title = Provider.of<ServiceProvider>(context).selectedService.name;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Consumer<ServiceProvider>(
-          builder: (context, model, _) {
-            return Text(
-              model.selectedService.name,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.bookmark_border),
-            onPressed: () {},
-          )
-        ],
+      appBar: MyAppBar(
+        context,
+        title: title,
       ),
       body: WillPopScope(
         child: SingleChildScrollView(

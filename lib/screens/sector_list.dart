@@ -2,6 +2,7 @@ import 'package:eicapp/models/sector.dart';
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/screens/sector.dart';
 import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,15 +24,9 @@ class _SectorListScreenState extends State<SectorListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Sectors',
-          style: TextStyle(
-            fontFamily: Theme.of(context).textTheme.title.fontFamily,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+      appBar: MyAppBar(
+        context,
+        title: "Sectors",
       ),
       // endDrawer: MyDrawer(),
       body: RefreshIndicator(

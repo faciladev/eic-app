@@ -1,4 +1,5 @@
 import 'package:eicapp/providers/incentive.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +15,7 @@ class _IncentiveScreenState extends State<IncentiveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.bookmark_border),
-            onPressed: () {},
-          )
-        ],
-      ),
+      appBar: MyAppBar(context),
       body: WillPopScope(
         child: SingleChildScrollView(
           child: Consumer<IncentiveProvider>(

@@ -79,6 +79,7 @@ class MyApp extends StatelessWidget {
         // primarySwatch: Colors.blue,
         primaryColor: _eicBlue(),
         accentColor: _eicGrey(),
+        secondaryHeaderColor: _eicGreen(),
         textTheme: TextTheme(
           title: TextStyle(
             fontFamily: 'Optima',
@@ -124,4 +125,5 @@ class MyApp extends StatelessWidget {
 
   Color _eicBlue() => Color.fromRGBO(34, 70, 157, 1);
   Color _eicGrey() => Color.fromRGBO(167, 169, 172, 1);
+  Color _eicGreen() => Color.fromRGBO(5, 138, 68, 1);
 }

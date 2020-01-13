@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/providers/setting.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 // import 'package:eicapp/providers/language.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,15 +19,9 @@ class SettingScreen extends StatelessWidget {
       }
 
       return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              label,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
+          appBar: MyAppBar(
+            context,
+            title: label,
           ),
           body: ListView(children: <Widget>[
             Column(

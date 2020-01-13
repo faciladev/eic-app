@@ -28,11 +28,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
         ),
         Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[Colors.transparent, Colors.white],
-          )),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[Colors.transparent, Colors.white],
+            ),
+          ),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,

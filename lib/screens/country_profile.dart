@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,26 +15,13 @@ class CountryProfileScreen extends StatefulWidget {
 class _CountryProfileScreenState extends State<CountryProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    String title = Provider.of<CountryProfileProvider>(context)
+        .selectedCountryProfile
+        .name;
     return Scaffold(
-      appBar: AppBar(
-        title: Consumer<CountryProfileProvider>(
-          builder: (context, model, _) {
-            return Text(
-              model.selectedCountryProfile.name,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.bookmark_border),
-            onPressed: () {},
-          )
-        ],
+      appBar: MyAppBar(
+        context,
+        title: title,
       ),
       body: WillPopScope(
         child: SingleChildScrollView(

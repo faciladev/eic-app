@@ -2,6 +2,7 @@ import 'package:eicapp/models/incentive.dart';
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/screens/incentive.dart';
 import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,22 +17,13 @@ class IncentiveListScreen extends StatefulWidget {
 class _IncentiveListScreenState extends State<IncentiveListScreen> {
   @override
   Widget build(BuildContext context) {
+    String title = Provider.of<IncentiveProvider>(context).selectedPackage;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Consumer<IncentiveProvider>(
-          builder: (context, model, _) {
-            return Text(
-              model.selectedPackage,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-        centerTitle: true,
+      appBar: MyAppBar(
+        context,
+        title: title,
       ),
-      // endDrawer: MyDrawer(),
       body: WillPopScope(
         child: SingleChildScrollView(
           child: Consumer<IncentiveProvider>(

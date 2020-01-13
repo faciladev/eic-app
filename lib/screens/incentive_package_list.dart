@@ -1,6 +1,7 @@
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/screens/incentive_list.dart';
 import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,15 +23,9 @@ class _IncentivePackageListScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Investment Incentives',
-          style: TextStyle(
-            fontFamily: Theme.of(context).textTheme.title.fontFamily,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+      appBar: MyAppBar(
+        context,
+        title: 'Investment Incentives',
       ),
       // endDrawer: MyDrawer(),
       body: RefreshIndicator(

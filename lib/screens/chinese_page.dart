@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -15,26 +16,12 @@ class ChinesePageScreen extends StatefulWidget {
 class _ChinesePageScreenState extends State<ChinesePageScreen> {
   @override
   Widget build(BuildContext context) {
+    String title =
+        Provider.of<ChinesePageProvider>(context).selectedChinesePage.name;
     return Scaffold(
-      appBar: AppBar(
-        title: Consumer<ChinesePageProvider>(
-          builder: (context, model, _) {
-            return Text(
-              model.selectedChinesePage?.name,
-              style: TextStyle(
-                fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.bookmark_border),
-            onPressed: () {},
-          )
-        ],
+      appBar: MyAppBar(
+        context,
+        title: title,
       ),
       body: WillPopScope(
         child: SingleChildScrollView(

@@ -1,6 +1,7 @@
 import 'package:eicapp/models/news.dart';
 import 'package:eicapp/providers/news.dart';
 import 'package:eicapp/screens/feedback.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -26,15 +27,9 @@ class _NewsListScreenState extends State<NewsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'News and Events',
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.title.fontFamily,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: true,
+        appBar: MyAppBar(
+          context,
+          title: 'News and Events',
         ),
         // endDrawer: MyDrawer(),
         body: RefreshIndicator(

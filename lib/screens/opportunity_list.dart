@@ -3,6 +3,7 @@ import 'package:eicapp/models/opportunity.dart';
 import 'package:eicapp/providers/country_profile.dart';
 // import 'package:eicapp/providers/opportunity.dart';
 import 'package:eicapp/screens/opportunity.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,15 +26,9 @@ class _OpportunityListScreenState extends State<OpportunityListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Opportunities',
-          style: TextStyle(
-            fontFamily: Theme.of(context).textTheme.title.fontFamily,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+      appBar: MyAppBar(
+        context,
+        title: "Opportunities",
       ),
       body: RefreshIndicator(
         child: _buildOpportunities(),

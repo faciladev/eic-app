@@ -1,6 +1,7 @@
 import 'package:eicapp/models/step.dart';
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/screens/step.dart';
+import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,15 +24,9 @@ class _StepListScreenState extends State<StepListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Steps',
-          style: TextStyle(
-            fontFamily: Theme.of(context).textTheme.title.fontFamily,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+      appBar: MyAppBar(
+        context,
+        title: "Steps",
       ),
       body: RefreshIndicator(
         child: _buildSteps(),
