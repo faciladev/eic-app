@@ -61,7 +61,32 @@ class _HomeScreenState extends State<HomeScreen> {
             centerTitle: true,
           ),
           drawer: MyDrawer(),
-          body: _buildDashboardMenu(context, language: model.language),
+          body: Stack(
+            children: [
+              Container(
+                color: Colors.grey,
+                // decoration: BoxDecoration(
+                //     // image: DecorationImage(
+                //     //   image: AssetImage('assets/images/background2.jpg'),
+                //     //   fit: BoxFit.cover,
+                //     // ),
+                //     ),
+              ),
+              ClipPath(
+                clipBehavior: Clip.hardEdge,
+                clipper: MyPathClipper(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/background.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              _buildDashboardMenu(context, language: model.language)
+            ],
+          ),
         );
       },
     );
@@ -71,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (language == Language.English) {
       List<Widget> children = [
         _buildMenuItem(context,
-            title: 'Country Profile',
+            title: 'Profile',
             iconData: FontAwesomeIcons.globeAfrica,
             color: Colors.cyan,
             screenId: CountryProfileListScreen.id),
@@ -100,11 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
             iconData: FontAwesomeIcons.paw,
             color: Colors.tealAccent,
             screenId: StepListScreen.id),
-        _buildMenuItem(context,
-            title: 'Contact',
-            iconData: FontAwesomeIcons.phone,
-            color: Colors.amber,
-            screenId: FeedbackScreen.id),
+        // _buildMenuItem(context,
+        //     title: 'Contact',
+        //     iconData: FontAwesomeIcons.phone,
+        //     color: Colors.amber,
+        //     screenId: FeedbackScreen.id),
       ];
       return _buildDashboard(context, children: children);
     } else {
@@ -125,11 +150,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     page: page,
                   );
                 }).toList(),
-                _buildMenuItem(context,
-                    title: '联系',
-                    iconData: FontAwesomeIcons.phone,
-                    color: Colors.amber,
-                    screenId: FeedbackScreen.id),
+                // _buildMenuItem(
+                //   context,
+                //   title: '联系',
+                //   iconData: FontAwesomeIcons.phone,
+                //   color: Colors.amber,
+                //   screenId: FeedbackScreen.id,
+                // ),
               ],
             );
           },
@@ -142,21 +169,82 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  GridView _buildDashboard(BuildContext context, {List<Widget> children}) {
-    return GridView.count(
-        padding: EdgeInsets.all(30.0), crossAxisCount: 2, children: children);
+  Widget _buildDashboard(BuildContext context, {List<Widget> children}) {
+    List<Widget> rows = _buildIndentedRow(children);
+    return Container(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.40),
+      child: ListView.builder(
+        itemCount: rows.length,
+        // scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index) {
+          return rows[index];
+        },
+      ),
+    );
   }
 
-  Card _buildMenuItem(BuildContext context,
+  List<Widget> _buildIndentedRow(List<Widget> children) {
+    List<Widget> rows = [];
+    final int crossAxisCount = 3;
+    // children.insert(0, _buildInvisibleMenu());
+    while (children.length % 3 != 0) {
+      children.add(_buildInvisibleMenu());
+    }
+
+    for (int cellIndex = 0;
+        cellIndex < children.length;
+        cellIndex = cellIndex + crossAxisCount) {
+      List<Widget> rowTemp = [];
+
+      int rightBound =
+          _calculateRightBound(cellIndex, crossAxisCount, children);
+
+      for (int cellCount = cellIndex; cellCount < rightBound; cellCount++) {
+        rowTemp.add(children[cellCount]);
+        if (cellCount + 1 == rightBound) {
+          rows.add(Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: rowTemp,
+          ));
+
+          // rows.add(SizedBox(
+          //   height: 15.0,
+          // ));
+        }
+      }
+    }
+    return rows;
+  }
+
+  Container _buildInvisibleMenu() {
+    return Container(
+      width: 125,
+      height: 125,
+    );
+  }
+
+  int _calculateRightBound(
+      int cellIndex, int crossAxisCount, List<Widget> children) {
+    int rightBound;
+    if (cellIndex + crossAxisCount >= children.length) {
+      rightBound = children.length;
+    } else {
+      rightBound = cellIndex + crossAxisCount;
+    }
+    return rightBound;
+  }
+
+  Widget _buildMenuItem(BuildContext context,
       {String title,
       IconData iconData,
       Color color,
       String screenId,
       ChinesePage page}) {
     return Card(
-      margin: EdgeInsets.all(8.0),
+      color: Theme.of(context).primaryColor,
+      margin: EdgeInsets.all(5.0),
       child: InkWell(
-        splashColor: Theme.of(context).primaryColor,
+        splashColor: Theme.of(context).accentColor,
         onTap: () {
           if (page != null) {
             Provider.of<ChinesePageProvider>(context, listen: false)
@@ -164,9 +252,13 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           Navigator.pushNamed(context, screenId);
         },
-        child: Center(
+        child: SizedBox(
+          height: 120,
+          width: 120,
+          // padding: const EdgeInsets.all(8.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               iconData == null
                   ? Container()
@@ -174,22 +266,45 @@ class _HomeScreenState extends State<HomeScreen> {
                       iconData,
                       size: 50.0,
                       color: color,
+                      // color: Colors.white,
                     ),
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                title,
-                style: TextStyle(
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Text(
+                  title,
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                    fontSize: 17.0,
-                    color: Colors.black54),
+                    fontSize: 15.0,
+                    color: Colors.white70,
+                    // color: Colors.white,
+                  ),
+                ),
               )
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class MyPathClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(size.width, 0.0);
+    path.lineTo(size.width, size.height * 0.40);
+    path.lineTo(0.0, size.height * 0.55);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

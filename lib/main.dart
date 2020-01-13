@@ -40,28 +40,28 @@ void main() => runApp(
           //   builder: (context) => LanguageProvider(),
           // ),
           ChangeNotifierProvider(
-            builder: (context) => NewsProvider(),
+            create: (context) => NewsProvider(),
           ),
           ChangeNotifierProvider(
-            builder: (context) => IncentiveProvider(),
+            create: (context) => IncentiveProvider(),
           ),
           ChangeNotifierProvider(
-            builder: (context) => SectorProvider(),
+            create: (context) => SectorProvider(),
           ),
           ChangeNotifierProvider(
-            builder: (context) => CountryProfileProvider(),
+            create: (context) => CountryProfileProvider(),
           ),
           ChangeNotifierProvider(
-            builder: (context) => ServiceProvider(),
+            create: (context) => ServiceProvider(),
           ),
           ChangeNotifierProvider(
-            builder: (context) => ChinesePageProvider(),
+            create: (context) => ChinesePageProvider(),
           ),
           ChangeNotifierProvider(
-            builder: (context) => SettingProvider(),
+            create: (context) => SettingProvider(),
           ),
           ChangeNotifierProvider(
-            builder: (context) => FeedbackProvider(),
+            create: (context) => FeedbackProvider(),
           )
         ],
         child: MyApp(),
