@@ -1,6 +1,8 @@
 import 'package:eicapp/models/service.dart';
 import 'package:eicapp/providers/service.dart';
 import 'package:eicapp/screens/service.dart';
+import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,19 +48,17 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                title: Text(
+            List<Widget> widgets = [
+              Flexible(
+                child: Text(
                   service.allServices[index].name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => _selectService(service.allServices[index]),
-              ),
+              )
+            ];
+            return MyListing(
+              widgets,
+              myOnTap: () => _selectService(service.allServices[index]),
             );
           },
           itemCount: service.allServices.length,

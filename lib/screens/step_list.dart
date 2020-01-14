@@ -1,6 +1,7 @@
 import 'package:eicapp/models/step.dart';
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/screens/step.dart';
+import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,23 +45,20 @@ class _StepListScreenState extends State<StepListScreen> {
         if (step.allSteps == null) {
           return Center(child: CircularProgressIndicator());
         }
+
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                title: Text(
+            return MyListing([
+              Flexible(
+                child: Text(
                   step.allSteps[index].name,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => _selectStep(step.allSteps[index]),
-              ),
-            );
+              )
+            ], myOnTap: () => _selectStep(step.allSteps[index]));
           },
           itemCount: step.allSteps.length,
         );

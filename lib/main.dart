@@ -6,6 +6,7 @@ import 'package:eicapp/providers/news.dart';
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/providers/service.dart';
 import 'package:eicapp/providers/setting.dart';
+import 'package:eicapp/screens/address.dart';
 import 'package:eicapp/screens/bootstrap.dart';
 import 'package:eicapp/screens/chinese_page.dart';
 import 'package:eicapp/screens/country_profile.dart';
@@ -118,7 +119,8 @@ class MyApp extends StatelessWidget {
         OpportunityListScreen.id: (context) => OpportunityListScreen(),
         OpportunityScreen.id: (context) => OpportunityScreen(),
         StepListScreen.id: (context) => StepListScreen(),
-        StepScreen.id: (context) => StepScreen()
+        StepScreen.id: (context) => StepScreen(),
+        AddressScreen.id: (context) => AddressScreen(),
       },
     );
   }

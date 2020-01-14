@@ -3,6 +3,7 @@ import 'package:eicapp/models/opportunity.dart';
 import 'package:eicapp/providers/country_profile.dart';
 // import 'package:eicapp/providers/opportunity.dart';
 import 'package:eicapp/screens/opportunity.dart';
+import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,20 +50,19 @@ class _OpportunityListScreenState extends State<OpportunityListScreen> {
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                title: Text(
-                  opportunity.allOpportunities[index].name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+            return MyListing(
+              [
+                Flexible(
+                  child: Text(
+                    opportunity.allOpportunities[index].name,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () =>
-                    _selectOpportunity(opportunity.allOpportunities[index]),
-              ),
+                )
+              ],
+              myOnTap: () =>
+                  _selectOpportunity(opportunity.allOpportunities[index]),
             );
           },
           itemCount: opportunity.allOpportunities.length,

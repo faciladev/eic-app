@@ -1,6 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+class MyPathClipper extends CustomClipper<Path> {
+  final double height1;
+  final double height2;
+  MyPathClipper({this.height1, this.height2, Listenable reclip})
+      : super(reclip: reclip);
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(size.width, 0.0);
+    path.lineTo(size.width, size.height * height1);
+    path.lineTo(0.0, size.height * height2);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
+String mySubstring(String name, int max) {
+  name = name.substring(0, name.length > max ? max : name.length);
+  return name;
+}
+
 Widget buildNestedContent(dynamic root, BuildContext context) {
   if (root == null) return Container();
 

@@ -1,6 +1,7 @@
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/screens/incentive_list.dart';
 import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,19 +48,19 @@ class _IncentivePackageListScreenState
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                title: Text(
+            List<Widget> widgets = [
+              Flexible(
+                child: Text(
                   incentive.packages[index],
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => _selectPackage(incentive.packages[index]),
-              ),
+              )
+            ];
+            return MyListing(
+              widgets,
+              myOnTap: () => _selectPackage(incentive.packages[index]),
             );
           },
           itemCount: incentive.packages.length,

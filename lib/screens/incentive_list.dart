@@ -1,7 +1,9 @@
 import 'package:eicapp/models/incentive.dart';
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/screens/incentive.dart';
+import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,36 +27,53 @@ class _IncentiveListScreenState extends State<IncentiveListScreen> {
         title: title,
       ),
       body: WillPopScope(
-        child: SingleChildScrollView(
-          child: Consumer<IncentiveProvider>(
-            builder: (context, model, _) {
-              if (model.selectedPackage == null) {
-                return Center(child: CircularProgressIndicator());
-              }
+        child: Consumer<IncentiveProvider>(
+          builder: (context, model, _) {
+            if (model.selectedPackage == null) {
+              return Center(child: CircularProgressIndicator());
+            }
 
-              var packageIncentives = model.selectedPackageIncentives();
-              return Column(
-                children: packageIncentives.map((incentive) {
-                  return Card(
-                    child: ListTile(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                      title: Text(
-                        incentive.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Icon(Icons.navigate_next),
-                      onTap: () {
-                        _selectIncentive(incentive);
-                      },
+            var packageIncentives = model.selectedPackageIncentives();
+            return ListView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                List<Widget> widgets = [
+                  Flexible(
+                    child: Text(
+                      packageIncentives[index].name,
+                      style: TextStyle(color: Colors.white),
                     ),
-                  );
-                }).toList(),
-              );
-            },
-          ),
+                  ),
+                ];
+
+                return MyListing(
+                  widgets,
+                  myOnTap: () => _selectIncentive(packageIncentives[index]),
+                );
+              },
+              itemCount: packageIncentives.length,
+            );
+            // return Column(
+            //   children: packageIncentives.map((incentive) {
+            //     return Card(
+            //       child: ListTile(
+            //         contentPadding:
+            //             EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+            //         title: Text(
+            //           incentive.name,
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.bold,
+            //           ),
+            //         ),
+            //         trailing: Icon(Icons.navigate_next),
+            //         onTap: () {
+            //           _selectIncentive(incentive);
+            //         },
+            //       ),
+            //     );
+            //   }).toList(),
+            // );
+          },
         ),
         onWillPop: () {
           Provider.of<IncentiveProvider>(context, listen: false)

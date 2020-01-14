@@ -2,6 +2,7 @@ import 'package:eicapp/models/sector.dart';
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/screens/sector.dart';
 import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,19 +49,19 @@ class _SectorListScreenState extends State<SectorListScreen> {
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                title: Text(
+            List<Widget> widgets = [
+              Flexible(
+                child: Text(
                   sector.allSectors[index].name,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => _selectSector(sector.allSectors[index]),
-              ),
+              )
+            ];
+            return MyListing(
+              widgets,
+              myOnTap: () => _selectSector(sector.allSectors[index]),
             );
           },
           itemCount: sector.allSectors.length,
