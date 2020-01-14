@@ -116,28 +116,49 @@ class MyDrawer extends StatelessWidget {
 
   DrawerHeader buildDrawerHeader(BuildContext context) {
     return DrawerHeader(
-      margin: EdgeInsets.zero,
+      // margin: EdgeInsets.zero,
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Image.asset(
             'assets/images/logo-small.png',
             fit: BoxFit.contain,
           ),
-          SizedBox(height: 17),
+          // SizedBox(
+          //   height: 10.0,
+          // ),
           Text(
-            'Ethiopian Investment Commission',
+            'Ethiopian',
             style: TextStyle(
               fontFamily: Theme.of(context).textTheme.title.fontFamily,
               color: Colors.white,
-              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+          Text(
+            'Investment',
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.title.fontFamily,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+          Text(
+            'Commission',
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.title.fontFamily,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
             ),
           ),
         ],
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).secondaryHeaderColor,
       ),
     );
   }

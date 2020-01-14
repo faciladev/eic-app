@@ -1,7 +1,8 @@
-// import 'package:eicapp/providers/language.dart';
 import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/setting.dart';
+import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,47 +24,37 @@ class SettingListScreen extends StatelessWidget {
           label = '语言';
         }
 
-        return Scaffold(
+        return Page(
           appBar: MyAppBar(
             context,
             title: title,
           ),
-          body: ListView(
+          pageContent: ListView(
             children: <Widget>[
-              Card(
-                child: InkWell(
-                  splashColor: Theme.of(context).primaryColor,
-                  onTap: () {
-                    Navigator.pushNamed(context, SettingScreen.id);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Text(
-                          label,
-                          style: Theme.of(context).textTheme.title,
-                        )),
-                        Text(
-                          language,
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 15.0),
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Theme.of(context).accentColor,
-                          size: 17.0,
-                        )
-                      ],
-                    ),
+              MyListing(
+                [
+                  Expanded(
+                      child: Text(
+                    label,
+                    style: TextStyle(color: Colors.white),
+                  )),
+                  Text(
+                    language,
+                    style: TextStyle(color: Colors.white, fontSize: 15.0),
                   ),
-                ),
-              )
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: 17.0,
+                  )
+                ],
+                myOnTap: () {
+                  Navigator.pushNamed(context, SettingScreen.id);
+                },
+              ),
             ],
           ),
         );
