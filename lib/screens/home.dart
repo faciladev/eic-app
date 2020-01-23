@@ -182,56 +182,56 @@ class _HomeScreenState extends State<HomeScreen> {
     return 1;
   }
 
-  List<Widget> _buildIndentedRow(List<Widget> children) {
-    List<Widget> rows = [];
-    final int crossAxisCount = 3;
-    // children.insert(0, _buildInvisibleMenu());
-    // while (children.length % 3 != 0) {
-    //   children.add(_buildInvisibleMenu());
-    // }
+  // List<Widget> _buildIndentedRow(List<Widget> children) {
+  //   List<Widget> rows = [];
+  //   final int crossAxisCount = 3;
+  //   // children.insert(0, _buildInvisibleMenu());
+  //   // while (children.length % 3 != 0) {
+  //   //   children.add(_buildInvisibleMenu());
+  //   // }
 
-    for (int cellIndex = 0;
-        cellIndex < children.length;
-        cellIndex = cellIndex + crossAxisCount) {
-      List<Widget> rowTemp = [];
+  //   for (int cellIndex = 0;
+  //       cellIndex < children.length;
+  //       cellIndex = cellIndex + crossAxisCount) {
+  //     List<Widget> rowTemp = [];
 
-      int rightBound =
-          _calculateRightBound(cellIndex, crossAxisCount, children);
+  //     int rightBound =
+  //         _calculateRightBound(cellIndex, crossAxisCount, children);
 
-      for (int cellCount = cellIndex; cellCount < rightBound; cellCount++) {
-        rowTemp.add(children[cellCount]);
-        if (cellCount + 1 == rightBound) {
-          rows.add(Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: rowTemp,
-          ));
+  //     for (int cellCount = cellIndex; cellCount < rightBound; cellCount++) {
+  //       rowTemp.add(children[cellCount]);
+  //       if (cellCount + 1 == rightBound) {
+  //         rows.add(Row(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: rowTemp,
+  //         ));
 
-          // rows.add(SizedBox(
-          //   height: 15.0,
-          // ));
-        }
-      }
-    }
-    return rows;
-  }
+  //         // rows.add(SizedBox(
+  //         //   height: 15.0,
+  //         // ));
+  //       }
+  //     }
+  //   }
+  //   return rows;
+  // }
 
-  Container _buildInvisibleMenu() {
-    return Container(
-      width: 125,
-      height: 125,
-    );
-  }
+  // Container _buildInvisibleMenu() {
+  //   return Container(
+  //     width: 125,
+  //     height: 125,
+  //   );
+  // }
 
-  int _calculateRightBound(
-      int cellIndex, int crossAxisCount, List<Widget> children) {
-    int rightBound;
-    if (cellIndex + crossAxisCount >= children.length) {
-      rightBound = children.length;
-    } else {
-      rightBound = cellIndex + crossAxisCount;
-    }
-    return rightBound;
-  }
+  // int _calculateRightBound(
+  //     int cellIndex, int crossAxisCount, List<Widget> children) {
+  //   int rightBound;
+  //   if (cellIndex + crossAxisCount >= children.length) {
+  //     rightBound = children.length;
+  //   } else {
+  //     rightBound = cellIndex + crossAxisCount;
+  //   }
+  //   return rightBound;
+  // }
 
   Widget _buildMenuItem(BuildContext context,
       {String title,
