@@ -4,6 +4,7 @@ import 'package:eicapp/screens/service.dart';
 import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +25,12 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: "Services",
       ),
-      body: RefreshIndicator(
+      pageContent: RefreshIndicator(
         child: _buildServices(),
         onRefresh: () {
           return Provider.of<ServiceProvider>(context, listen: false)

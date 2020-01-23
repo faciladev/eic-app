@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 class MyListing extends StatelessWidget {
   final Function myOnTap;
   final List<Widget> widgets;
-  const MyListing(this.widgets, {Key key, this.myOnTap}) : super(key: key);
+  final bool shouldGradient;
+  const MyListing(
+    this.widgets, {
+    Key key,
+    this.myOnTap,
+    this.shouldGradient = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +20,20 @@ class MyListing extends StatelessWidget {
         margin: EdgeInsets.all(10.0),
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            stops: [0.4, 0.8],
-            colors: <Color>[
-              Theme.of(context).primaryColor,
-              Theme.of(context).secondaryHeaderColor
-            ],
-          ),
-        ),
+            color:
+                shouldGradient ? null : Theme.of(context).secondaryHeaderColor,
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            gradient: shouldGradient
+                ? LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    stops: [0.1, 0.9],
+                    colors: <Color>[
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).secondaryHeaderColor
+                    ],
+                  )
+                : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: widgets,

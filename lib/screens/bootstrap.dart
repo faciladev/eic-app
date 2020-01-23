@@ -62,7 +62,7 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
               height: 20.0,
             ),
             Text(
-              'Please wait while your app is configuring',
+              'Please wait...',
               style: Theme.of(context).textTheme.body1,
             ),
             // SizedBox(

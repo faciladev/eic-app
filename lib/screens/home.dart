@@ -8,11 +8,16 @@ import 'package:eicapp/screens/opportunity_list.dart';
 import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/step_list.dart';
+import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/drawer.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
+import 'package:eicapp/widgets/stackPage.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'country_profile_list.dart';
 
@@ -48,40 +53,21 @@ class _HomeScreenState extends State<HomeScreen> {
           pageTitle = '投资埃塞俄比亚';
         }
 
-        // return NewsListScreen();
-        return Scaffold(
-          backgroundColor: Colors.blueGrey[50],
+        return Page(
           appBar: MyAppBar(
             context,
             title: pageTitle ?? '...',
           ),
           drawer: MyDrawer(),
-          body: Stack(
-            children: [
-              Container(
-                color: Colors.grey,
-                // decoration: BoxDecoration(
-                //     // image: DecorationImage(
-                //     //   image: AssetImage('assets/images/background2.jpg'),
-                //     //   fit: BoxFit.cover,
-                //     // ),
-                //     ),
-              ),
-              ClipPath(
-                clipBehavior: Clip.hardEdge,
-                clipper: MyPathClipper(),
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/background.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              _buildDashboardMenu(context, language: model.language)
-            ],
-          ),
+          // customClipper: MyPathClipper(height1: 0.43, height2: 0.55),
+          // shadow: Shadow(blurRadius: 10),
+          // image: DecorationImage(
+          //   image: AssetImage('assets/images/home1.jpg'),
+          //   fit: BoxFit.cover,
+          //   alignment: Alignment.topCenter,
+          // ),
+          pageContent: _buildDashboardMenu(context, language: model.language),
+          // pageContentOffsetPercent: 0.40,
         );
       },
     );
@@ -125,6 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
         //     iconData: FontAwesomeIcons.phone,
         //     color: Colors.amber,
         //     screenId: FeedbackScreen.id),
+        // _buildMenuItem(context,
+        //     title: 'Setting',
+        //     iconData: FontAwesomeIcons.cog,
+        //     color: Colors.amber,
+        //     screenId: FeedbackScreen.id),
       ];
       return _buildDashboard(context, children: children);
     } else {
@@ -165,26 +156,39 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildDashboard(BuildContext context, {List<Widget> children}) {
-    List<Widget> rows = _buildIndentedRow(children);
-    return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.40),
-      child: ListView.builder(
-        itemCount: rows.length,
-        // scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, int index) {
-          return rows[index];
-        },
+    return StaggeredGridView.countBuilder(
+      padding: EdgeInsets.all(10),
+      crossAxisCount: 3,
+      itemCount: children.length,
+      itemBuilder: (BuildContext context, int index) => new Container(
+        child: children[index],
       ),
+      staggeredTileBuilder: (int index) => new StaggeredTile.count(
+          _getCrossAxisSpan(index), _getMainAxisSpan(index)),
+      mainAxisSpacing: 4.0,
+      crossAxisSpacing: 4.0,
     );
+  }
+
+  int _getCrossAxisSpan(int index) {
+    if (index == 0 || index % 3 == 0) return 3;
+    if (index % 4 == 0 || index % 2 == 0) return 2;
+    return 1;
+  }
+
+  int _getMainAxisSpan(int index) {
+    // if (index == 0 || index % 3 == 0) return 2;
+    // if (index % 4 == 0 || index % 2 == 0) return 2;
+    return 1;
   }
 
   List<Widget> _buildIndentedRow(List<Widget> children) {
     List<Widget> rows = [];
     final int crossAxisCount = 3;
     // children.insert(0, _buildInvisibleMenu());
-    while (children.length % 3 != 0) {
-      children.add(_buildInvisibleMenu());
-    }
+    // while (children.length % 3 != 0) {
+    //   children.add(_buildInvisibleMenu());
+    // }
 
     for (int cellIndex = 0;
         cellIndex < children.length;
@@ -198,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
         rowTemp.add(children[cellCount]);
         if (cellCount + 1 == rightBound) {
           rows.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: rowTemp,
           ));
 
@@ -235,71 +239,61 @@ class _HomeScreenState extends State<HomeScreen> {
       Color color,
       String screenId,
       ChinesePage page}) {
-    return Card(
-      color: Theme.of(context).primaryColor,
+    return Container(
       margin: EdgeInsets.all(5.0),
-      child: InkWell(
-        splashColor: Theme.of(context).accentColor,
-        onTap: () {
-          if (page != null) {
-            Provider.of<ChinesePageProvider>(context, listen: false)
-                .selectChinesePage(page);
-          }
-          Navigator.pushNamed(context, screenId);
-        },
-        child: SizedBox(
-          height: 120,
-          width: 120,
-          // padding: const EdgeInsets.all(8.0),
-          child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              iconData == null
-                  ? Container()
-                  : Icon(
-                      iconData,
-                      size: 50.0,
-                      color: color,
+      decoration: BoxDecoration(
+        boxShadow: [BoxShadow(blurRadius: 3)],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      //Needed to keep the InkWell ripple effect
+      child: Material(
+        borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context).primaryColor.withOpacity(0.9),
+        child: InkWell(
+          splashColor: Theme.of(context).accentColor,
+          onTap: () {
+            if (page != null) {
+              Provider.of<ChinesePageProvider>(context, listen: false)
+                  .selectChinesePage(page);
+            }
+            Navigator.pushNamed(context, screenId);
+          },
+          child: Container(
+            height: 120,
+            width: 120,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                iconData == null
+                    ? Container()
+                    : Icon(
+                        iconData,
+                        size: 50.0,
+                        color: color,
+                        // color: Colors.white,
+                      ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: Theme.of(context).textTheme.title.fontFamily,
+                      fontSize: 15.0,
+                      color: Colors.white,
                       // color: Colors.white,
                     ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                    fontSize: 15.0,
-                    color: Colors.white70,
-                    // color: Colors.white,
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-}
-
-class MyPathClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(size.width, 0.0);
-    path.lineTo(size.width, size.height * 0.40);
-    path.lineTo(0.0, size.height * 0.55);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

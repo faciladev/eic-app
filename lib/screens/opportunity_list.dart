@@ -5,6 +5,7 @@ import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/screens/opportunity.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,12 +27,12 @@ class _OpportunityListScreenState extends State<OpportunityListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: "Opportunities",
       ),
-      body: RefreshIndicator(
+      pageContent: RefreshIndicator(
         child: _buildOpportunities(),
         onRefresh: () {
           return Provider.of<CountryProfileProvider>(context, listen: false)

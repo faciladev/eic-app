@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,9 +15,10 @@ class IncentiveScreen extends StatefulWidget {
 class _IncentiveScreenState extends State<IncentiveScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(context),
-      body: WillPopScope(
+      background: false,
+      pageContent: WillPopScope(
         child: SingleChildScrollView(
           child: Consumer<IncentiveProvider>(
             builder: (context, model, _) {

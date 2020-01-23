@@ -3,6 +3,7 @@ import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/screens/step.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +25,12 @@ class _StepListScreenState extends State<StepListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: "Steps",
       ),
-      body: RefreshIndicator(
+      pageContent: RefreshIndicator(
         child: _buildSteps(),
         onRefresh: () {
           return Provider.of<CountryProfileProvider>(context, listen: false)

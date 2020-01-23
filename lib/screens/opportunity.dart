@@ -2,6 +2,7 @@
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -19,12 +20,13 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
   Widget build(BuildContext context) {
     String title =
         Provider.of<CountryProfileProvider>(context).selectedOpportunity.name;
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: title,
       ),
-      body: WillPopScope(
+      background: false,
+      pageContent: WillPopScope(
         child: SingleChildScrollView(
           child: Consumer<CountryProfileProvider>(
             builder: (context, model, _) {

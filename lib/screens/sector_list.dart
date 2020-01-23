@@ -4,6 +4,7 @@ import 'package:eicapp/screens/sector.dart';
 import 'package:eicapp/widgets/drawer.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,13 +25,13 @@ class _SectorListScreenState extends State<SectorListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: "Sectors",
       ),
       // endDrawer: MyDrawer(),
-      body: RefreshIndicator(
+      pageContent: RefreshIndicator(
         child: _buildSectors(),
         onRefresh: () {
           return Provider.of<SectorProvider>(context, listen: false)

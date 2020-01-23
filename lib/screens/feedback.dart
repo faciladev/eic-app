@@ -71,52 +71,45 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget pageContent = SingleChildScrollView(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  _buildTextField(
-                    labelText: "Email",
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (input) => !input.contains('@')
-                        ? 'Please enter a valid email'
-                        : null,
-                    onSaved: (input) => _email = input,
-                  ),
-                  _buildTextField(
-                    labelText: "Subject",
-                    validator: (input) => input.trim().isEmpty
-                        ? 'Please enter feedback subject'
-                        : null,
-                    onSaved: (input) => _subject = input,
-                  ),
-                  _buildTextField(
-                    labelText: "Message",
-                    validator: (input) => input.trim().isEmpty
-                        ? 'Please enter your feedback'
-                        : null,
-                    onSaved: (input) => _message = input,
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    width: 250.0,
-                    child: buildSendButton(context),
-                  )
-                ],
+    Widget pageContent = Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              _buildTextField(
+                labelText: "Email",
+                keyboardType: TextInputType.emailAddress,
+                validator: (input) =>
+                    !input.contains('@') ? 'Please enter a valid email' : null,
+                onSaved: (input) => _email = input,
               ),
-            )
-          ],
-        ),
-      ),
+              _buildTextField(
+                labelText: "Subject",
+                validator: (input) => input.trim().isEmpty
+                    ? 'Please enter feedback subject'
+                    : null,
+                onSaved: (input) => _subject = input,
+              ),
+              _buildTextField(
+                labelText: "Message",
+                validator: (input) =>
+                    input.trim().isEmpty ? 'Please enter your feedback' : null,
+                onSaved: (input) => _message = input,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: 250.0,
+                child: buildSendButton(context),
+              ),
+            ],
+          ),
+        )
+      ],
     );
 
     return StackPage(
@@ -133,8 +126,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         title: "Contact",
       ),
       customClipper: MyPathClipper(height1: 0.30, height2: 0.40),
+      shadow: Shadow(blurRadius: 5),
       image: DecorationImage(
-        image: AssetImage('assets/images/background.jpg'),
+        image: AssetImage('assets/images/background3.jpg'),
         fit: BoxFit.cover,
       ),
       pageContent: pageContent,

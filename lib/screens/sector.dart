@@ -1,6 +1,7 @@
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -17,12 +18,13 @@ class _SectorScreenState extends State<SectorScreen> {
   @override
   Widget build(BuildContext context) {
     String title = Provider.of<SectorProvider>(context).selectedSector.name;
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: title,
       ),
-      body: WillPopScope(
+      background: false,
+      pageContent: WillPopScope(
         child: SingleChildScrollView(
           child: Consumer<SectorProvider>(
             builder: (context, model, _) {

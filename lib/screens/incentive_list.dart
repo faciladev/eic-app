@@ -5,6 +5,7 @@ import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/drawer.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +22,12 @@ class _IncentiveListScreenState extends State<IncentiveListScreen> {
   Widget build(BuildContext context) {
     String title = Provider.of<IncentiveProvider>(context).selectedPackage;
 
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: title,
       ),
-      body: WillPopScope(
+      pageContent: WillPopScope(
         child: Consumer<IncentiveProvider>(
           builder: (context, model, _) {
             if (model.selectedPackage == null) {
@@ -49,6 +50,7 @@ class _IncentiveListScreenState extends State<IncentiveListScreen> {
                 return MyListing(
                   widgets,
                   myOnTap: () => _selectIncentive(packageIncentives[index]),
+                  shouldGradient: false,
                 );
               },
               itemCount: packageIncentives.length,

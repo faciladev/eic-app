@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/service.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +19,13 @@ class _ServiceScreenState extends State<ServiceScreen> {
   Widget build(BuildContext context) {
     String title = Provider.of<ServiceProvider>(context).selectedService.name;
 
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: title,
       ),
-      body: WillPopScope(
+      background: false,
+      pageContent: WillPopScope(
         child: SingleChildScrollView(
           child: Consumer<ServiceProvider>(
             builder: (context, model, _) {

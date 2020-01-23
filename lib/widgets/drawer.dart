@@ -116,49 +116,61 @@ class MyDrawer extends StatelessWidget {
 
   DrawerHeader buildDrawerHeader(BuildContext context) {
     return DrawerHeader(
+      padding: EdgeInsets.zero,
       // margin: EdgeInsets.zero,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Image.asset(
-            'assets/images/logo-small.png',
-            fit: BoxFit.contain,
-          ),
-          // SizedBox(
-          //   height: 10.0,
-          // ),
-          Text(
-            'Ethiopian',
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.title.fontFamily,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          // color: Theme.of(context).primaryColor,
+
+          image: DecorationImage(
+            image: AssetImage('assets/images/background3.jpg'),
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.bottomCenter,
+            colorFilter: ColorFilter.mode(
+              Colors.grey,
+              BlendMode.exclusion,
             ),
           ),
-          Text(
-            'Investment',
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.title.fontFamily,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Image.asset(
+              'assets/images/logo-small.png',
+              fit: BoxFit.contain,
             ),
-          ),
-          Text(
-            'Commission',
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.title.fontFamily,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-            ),
-          ),
-        ],
+            // SizedBox(
+            //   height: 10.0,
+            // ),
+            _buildEicName("Ethiopian", context),
+            _buildEicName("Investment", context),
+            _buildEicName("Commission", context),
+          ],
+        ),
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).secondaryHeaderColor,
+        color: Colors.transparent,
+      ),
+    );
+  }
+
+  Text _buildEicName(String title, BuildContext context) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontFamily: Theme.of(context).textTheme.title.fontFamily,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 22,
+        shadows: [
+          Shadow(
+            color: Colors.black87,
+            blurRadius: 10.0,
+            offset: Offset.fromDirection(1),
+          ),
+        ],
       ),
     );
   }
@@ -175,6 +187,7 @@ class MyDrawer extends StatelessWidget {
             size: 20.0,
           )
         : null;
+
     return InkWell(
       splashColor: Theme.of(context).primaryColor,
 
@@ -188,9 +201,14 @@ class MyDrawer extends StatelessWidget {
           ),
         )),
         child: ListTile(
-          leading: icon,
+          // leading: icon,
           title: Text(
             itemName,
+            textAlign: TextAlign.left,
+          ),
+          trailing: Icon(
+            FontAwesomeIcons.angleRight,
+            size: 14.0,
           ),
         ),
       ),

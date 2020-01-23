@@ -3,6 +3,7 @@ import 'package:eicapp/screens/incentive_list.dart';
 import 'package:eicapp/widgets/drawer.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
+import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,13 +24,13 @@ class _IncentivePackageListScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Page(
       appBar: MyAppBar(
         context,
         title: 'Investment Incentives',
       ),
       // endDrawer: MyDrawer(),
-      body: RefreshIndicator(
+      pageContent: RefreshIndicator(
         child: _buildPackages(),
         onRefresh: () {
           return Provider.of<IncentiveProvider>(context, listen: false)
