@@ -53,7 +53,9 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               Flexible(
                 child: Text(
                   service.allServices[index].name,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               )
             ];

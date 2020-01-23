@@ -279,12 +279,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: Text(
-                    title,
+                    title.toUpperCase(),
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                      fontSize: 15.0,
+                      // fontWeight: FontWeight.bold,
+                      fontFamily: Theme.of(context).textTheme.body1.fontFamily,
+                      fontSize: 17.0,
                       color: Colors.white,
+
                       // color: Colors.white,
                     ),
                   ),

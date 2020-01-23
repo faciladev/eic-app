@@ -40,7 +40,10 @@ class SettingListScreen extends StatelessWidget {
                   )),
                   Text(
                     language,
-                    style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
                   ),
                   SizedBox(
                     width: 10.0,

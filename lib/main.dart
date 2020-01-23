@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           body1: TextStyle(
-            fontFamily: 'Serif',
+            fontFamily: 'Open Sans',
             fontSize: 18.0,
           ),
         ),

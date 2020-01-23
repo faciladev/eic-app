@@ -12,6 +12,11 @@ class MyAppBar extends PreferredSize {
               title != null ? title.toUpperCase() : "",
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
+                fontFamily: Theme.of(context).textTheme.title.fontFamily,
+                fontWeight: FontWeight.bold,
+                // style: TextStyle(
+                //   fontFamily: Theme.of(context).textTheme.body1.fontFamily,
+                // ),
               ),
             ),
             iconTheme: IconThemeData(

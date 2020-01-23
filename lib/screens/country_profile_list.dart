@@ -67,7 +67,9 @@ class _CountryProfileListScreenState extends State<CountryProfileListScreen> {
               Flexible(
                 child: Text(
                   countryProfile.allCountryProfiles[index].name,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               )
             ];
