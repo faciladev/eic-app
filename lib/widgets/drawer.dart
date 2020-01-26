@@ -1,15 +1,14 @@
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/chinese_page.dart';
+import 'package:eicapp/screens/country_profile.dart';
 import 'package:eicapp/screens/country_profile_list.dart';
 import 'package:eicapp/screens/feedback.dart';
 import 'package:eicapp/screens/incentive_package_list.dart';
 import 'package:eicapp/screens/news_list.dart';
-import 'package:eicapp/screens/opportunity_list.dart';
 import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/setting_list.dart';
-import 'package:eicapp/screens/step_list.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -85,13 +84,11 @@ class MyDrawer extends StatelessWidget {
             iconData: FontAwesomeIcons.industry),
         _buildDrawerItem(
             context: context,
-            itemName: 'Investment Opportunities',
-            screenId: OpportunityListScreen.id,
+            itemName: 'Opportunities',
             iconData: FontAwesomeIcons.solidLightbulb),
         _buildDrawerItem(
             context: context,
-            itemName: 'Steps',
-            screenId: StepListScreen.id,
+            itemName: 'Get Started',
             iconData: FontAwesomeIcons.paw),
         _buildDrawerItem(
             context: context,
@@ -215,7 +212,19 @@ class MyDrawer extends StatelessWidget {
       onTap: () {
         if (callback != null) callback();
         Navigator.pop(context);
-        Navigator.pushNamed(context, screenId);
+        if (itemName == "Get Started") {
+          Navigator.pushNamed(context, CountryProfileScreen.id,
+              arguments: <String, String>{
+                "profileName": itemName,
+              });
+        } else if (itemName == "Opportunities") {
+          Navigator.pushNamed(context, CountryProfileScreen.id,
+              arguments: <String, String>{
+                "profileName": "Growth Sectors and Opportunities",
+              });
+        } else {
+          Navigator.pushNamed(context, screenId);
+        }
       },
     );
   }

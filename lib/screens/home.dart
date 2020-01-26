@@ -2,18 +2,13 @@ import 'package:eicapp/models/chinese_page.dart';
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/chinese_page.dart';
-import 'package:eicapp/screens/feedback.dart';
+import 'package:eicapp/screens/country_profile.dart';
 import 'package:eicapp/screens/incentive_package_list.dart';
-import 'package:eicapp/screens/opportunity_list.dart';
 import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service_list.dart';
-import 'package:eicapp/screens/step_list.dart';
-import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/drawer.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
-import 'package:eicapp/widgets/stackPage.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -76,11 +71,25 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildDashboardMenu(BuildContext context, {Language language}) {
     if (language == Language.English) {
       List<Widget> children = [
-        _buildMenuItem(context,
-            title: 'Profile',
-            iconData: FontAwesomeIcons.globeAfrica,
-            color: Colors.cyan,
-            screenId: CountryProfileListScreen.id),
+        _buildMenuItem(
+          context,
+          title: 'Get Started',
+          iconData: FontAwesomeIcons.paw,
+          color: Colors.tealAccent,
+        ),
+        _buildMenuItem(
+          context,
+          title: 'Profile',
+          iconData: FontAwesomeIcons.globeAfrica,
+          color: Colors.cyan,
+          screenId: CountryProfileListScreen.id,
+        ),
+        _buildMenuItem(
+          context,
+          title: 'Opportunities',
+          iconData: FontAwesomeIcons.solidLightbulb,
+          color: Colors.redAccent,
+        ),
         _buildMenuItem(context,
             title: 'Services',
             iconData: FontAwesomeIcons.cogs,
@@ -95,17 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Sectors',
             iconData: FontAwesomeIcons.industry,
             color: Colors.greenAccent,
-            screenId: SectorListScreen.id),
-        _buildMenuItem(context,
-            title: 'Opportunities',
-            iconData: FontAwesomeIcons.solidLightbulb,
-            color: Colors.redAccent,
-            screenId: OpportunityListScreen.id),
-        _buildMenuItem(context,
-            title: 'Steps',
-            iconData: FontAwesomeIcons.paw,
-            color: Colors.tealAccent,
-            screenId: StepListScreen.id),
+            screenId: SectorListScreen.id)
         // _buildMenuItem(context,
         //     title: 'Contact',
         //     iconData: FontAwesomeIcons.phone,
@@ -182,57 +181,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return 1;
   }
 
-  // List<Widget> _buildIndentedRow(List<Widget> children) {
-  //   List<Widget> rows = [];
-  //   final int crossAxisCount = 3;
-  //   // children.insert(0, _buildInvisibleMenu());
-  //   // while (children.length % 3 != 0) {
-  //   //   children.add(_buildInvisibleMenu());
-  //   // }
-
-  //   for (int cellIndex = 0;
-  //       cellIndex < children.length;
-  //       cellIndex = cellIndex + crossAxisCount) {
-  //     List<Widget> rowTemp = [];
-
-  //     int rightBound =
-  //         _calculateRightBound(cellIndex, crossAxisCount, children);
-
-  //     for (int cellCount = cellIndex; cellCount < rightBound; cellCount++) {
-  //       rowTemp.add(children[cellCount]);
-  //       if (cellCount + 1 == rightBound) {
-  //         rows.add(Row(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: rowTemp,
-  //         ));
-
-  //         // rows.add(SizedBox(
-  //         //   height: 15.0,
-  //         // ));
-  //       }
-  //     }
-  //   }
-  //   return rows;
-  // }
-
-  // Container _buildInvisibleMenu() {
-  //   return Container(
-  //     width: 125,
-  //     height: 125,
-  //   );
-  // }
-
-  // int _calculateRightBound(
-  //     int cellIndex, int crossAxisCount, List<Widget> children) {
-  //   int rightBound;
-  //   if (cellIndex + crossAxisCount >= children.length) {
-  //     rightBound = children.length;
-  //   } else {
-  //     rightBound = cellIndex + crossAxisCount;
-  //   }
-  //   return rightBound;
-  // }
-
   Widget _buildMenuItem(BuildContext context,
       {String title,
       IconData iconData,
@@ -256,7 +204,19 @@ class _HomeScreenState extends State<HomeScreen> {
               Provider.of<ChinesePageProvider>(context, listen: false)
                   .selectChinesePage(page);
             }
-            Navigator.pushNamed(context, screenId);
+            if (title == "Get Started") {
+              Navigator.pushNamed(context, CountryProfileScreen.id,
+                  arguments: <String, String>{
+                    "profileName": title,
+                  });
+            } else if (title == "Opportunities") {
+              Navigator.pushNamed(context, CountryProfileScreen.id,
+                  arguments: <String, String>{
+                    "profileName": "Growth Sectors and Opportunities",
+                  });
+            } else {
+              Navigator.pushNamed(context, screenId);
+            }
           },
           child: Container(
             height: 120,

@@ -18,6 +18,7 @@ class Page extends StatelessWidget {
     return Scaffold(
       appBar: appBar,
       body: Container(
+        // height: MediaQuery.of(context).size.height,
         decoration: background
             ? BoxDecoration(
                 image: DecorationImage(

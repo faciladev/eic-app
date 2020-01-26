@@ -5,6 +5,7 @@ import 'package:eicapp/models/step.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:eicapp/models/country_profile.dart';
+import 'package:provider/provider.dart';
 
 class CountryProfileProvider extends ChangeNotifier {
   List<dynamic> allCountryProfiles;
@@ -85,6 +86,15 @@ class CountryProfileProvider extends ChangeNotifier {
 
   void selectCountryProfile(CountryProfile countryProfile) =>
       selectedCountryProfile = countryProfile;
+
+  void selectCountryProfileByName(String profileName) {
+    if (allCountryProfiles != null) {
+      selectedCountryProfile = allCountryProfiles.singleWhere((profile) {
+        return profile.name == profileName;
+      }) as CountryProfile;
+    }
+  }
+
   void unselectCountryProfile() => selectedCountryProfile = null;
 
   void selectOpportunity(Opportunity opportunity) =>

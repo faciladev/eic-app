@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 class CountryProfileScreen extends StatefulWidget {
   static final String id = 'country_profile_screen';
+
   @override
   State<StatefulWidget> createState() {
     return _CountryProfileScreenState();
@@ -16,53 +17,76 @@ class CountryProfileScreen extends StatefulWidget {
 class _CountryProfileScreenState extends State<CountryProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    String title = Provider.of<CountryProfileProvider>(context)
-        .selectedCountryProfile
-        .name;
+    final dynamic args = ModalRoute.of(context).settings.arguments;
+    String title;
+    Widget pageContent;
+    if (args != null) {
+      Provider.of<CountryProfileProvider>(context).fetchAllCountryProfiles();
+      Provider.of<CountryProfileProvider>(context)
+          .selectCountryProfileByName(args['profileName']);
+      title = args['profileName'];
+    }
+
+    if (Provider.of<CountryProfileProvider>(context).selectedCountryProfile !=
+        null) {
+      title = Provider.of<CountryProfileProvider>(context)
+          .selectedCountryProfile
+          .name;
+    }
+
+    pageContent = WillPopScope(
+      child: SingleChildScrollView(
+        child: Consumer<CountryProfileProvider>(
+          builder: (context, model, _) {
+            if (model.selectedCountryProfile == null) {
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 17,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          model.selectedCountryProfile.name,
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
+                      buildNestedContent(
+                          model.selectedCountryProfile.content, context)
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+      onWillPop: () {
+        Provider.of<CountryProfileProvider>(context, listen: false)
+            .unselectCountryProfile();
+        return Future.value(true);
+      },
+    );
+
     return Page(
       appBar: MyAppBar(
         context,
         title: title,
       ),
       background: false,
-      pageContent: WillPopScope(
-        child: SingleChildScrollView(
-          child: Consumer<CountryProfileProvider>(
-            builder: (context, model, _) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 17,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            model.selectedCountryProfile.name,
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                        ),
-                        buildNestedContent(
-                            model.selectedCountryProfile.content, context)
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-        onWillPop: () {
-          Provider.of<CountryProfileProvider>(context, listen: false)
-              .unselectCountryProfile();
-          return Future.value(true);
-        },
-      ),
+      pageContent: pageContent,
     );
   }
 }

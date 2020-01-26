@@ -17,16 +17,12 @@ import 'package:eicapp/screens/incentive_list.dart';
 import 'package:eicapp/screens/incentive_package_list.dart';
 import 'package:eicapp/screens/landing.dart';
 import 'package:eicapp/screens/news.dart';
-import 'package:eicapp/screens/opportunity.dart';
-import 'package:eicapp/screens/opportunity_list.dart';
 import 'package:eicapp/screens/sector.dart';
 import 'package:eicapp/screens/sector_list.dart';
 import 'package:eicapp/screens/service.dart';
 import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/setting.dart';
 import 'package:eicapp/screens/setting_list.dart';
-import 'package:eicapp/screens/step.dart';
-import 'package:eicapp/screens/step_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -116,10 +112,10 @@ class MyApp extends StatelessWidget {
         SettingListScreen.id: (context) => SettingListScreen(),
         SettingScreen.id: (context) => SettingScreen(),
         LanguageScreen.id: (context) => LanguageScreen(),
-        OpportunityListScreen.id: (context) => OpportunityListScreen(),
-        OpportunityScreen.id: (context) => OpportunityScreen(),
-        StepListScreen.id: (context) => StepListScreen(),
-        StepScreen.id: (context) => StepScreen(),
+        // OpportunityListScreen.id: (context) => OpportunityListScreen(),
+        // OpportunityScreen.id: (context) => OpportunityScreen(),
+        // StepListScreen.id: (context) => StepListScreen(),
+        // StepScreen.id: (context) => StepScreen(),
         AddressScreen.id: (context) => AddressScreen(),
       },
     );

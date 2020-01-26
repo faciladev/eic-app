@@ -38,20 +38,6 @@ class _CountryProfileListScreenState extends State<CountryProfileListScreen> {
         },
       ),
     );
-    return Scaffold(
-      appBar: MyAppBar(
-        context,
-        title: "Country Profile",
-      ),
-      // endDrawer: MyDrawer(),
-      body: RefreshIndicator(
-        child: _buildSectors(),
-        onRefresh: () {
-          return Provider.of<CountryProfileProvider>(context, listen: false)
-              .fetchAllCountryProfiles();
-        },
-      ),
-    );
   }
 
   Widget _buildSectors() {
