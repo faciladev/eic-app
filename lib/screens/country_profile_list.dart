@@ -49,6 +49,12 @@ class _CountryProfileListScreenState extends State<CountryProfileListScreen> {
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
+            if (countryProfile.allCountryProfiles[index].name ==
+                    "Get Started" ||
+                countryProfile.allCountryProfiles[index].name ==
+                    "Growth Sectors and Opportunities") {
+              return Container();
+            }
             List<Widget> widgets = [
               Flexible(
                 child: Text(

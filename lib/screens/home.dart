@@ -1,3 +1,5 @@
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eicapp/models/chinese_page.dart';
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/providers/setting.dart';
@@ -12,7 +14,6 @@ import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'country_profile_list.dart';
 
@@ -49,26 +50,99 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
         return Page(
-          appBar: MyAppBar(
-            context,
-            title: pageTitle ?? '...',
-          ),
-          drawer: MyDrawer(),
-          // customClipper: MyPathClipper(height1: 0.43, height2: 0.55),
-          // shadow: Shadow(blurRadius: 10),
-          // image: DecorationImage(
-          //   image: AssetImage('assets/images/home1.jpg'),
-          //   fit: BoxFit.cover,
-          //   alignment: Alignment.topCenter,
-          // ),
-          pageContent: _buildDashboardMenu(context, language: model.language),
-          // pageContentOffsetPercent: 0.40,
-        );
+            appBar: MyAppBar(
+              context,
+              title: pageTitle ?? '...',
+            ),
+            drawer: MyDrawer(),
+            // customClipper: MyPathClipper(height1: 0.43, height2: 0.55),
+            // shadow: Shadow(blurRadius: 10),
+            // image: DecorationImage(
+            //   image: AssetImage('assets/images/home1.jpg'),
+            //   fit: BoxFit.cover,
+            //   alignment: Alignment.topCenter,
+            // ),
+            pageContent: Container(
+                height: MediaQuery.of(context).size.height,
+                child: CustomScrollView(slivers: <Widget>[
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: CarouselSlider(
+                            autoPlay: true,
+                            autoPlayAnimationDuration: Duration(seconds: 5),
+                            pauseAutoPlayOnTouch: Duration(seconds: 10),
+                            // enlargeCenterPage: true,
+                            height: MediaQuery.of(context).size.height * 0.30,
+                            items: [2, 3, 4].map((i) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 5.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 5,
+                                          color: Colors.black87,
+                                        )
+                                      ],
+                                      color: Theme.of(context).primaryColor,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/background$i.jpg'),
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.topCenter,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Text(
+                                          'Tourism Sector is booming',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            backgroundColor:
+                                                Colors.black.withOpacity(0.5),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    ),
+                  ),
+                  SliverGrid(
+                    delegate: SliverChildListDelegate(
+                      _buildDashboardMenu(context, language: model.language),
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                  ),
+                ]
+                    // _buildDashboardMenu(context, language: model.language)),
+                    ))
+
+            // pageContentOffsetPercent: 0.40,
+            );
       },
     );
   }
 
-  Widget _buildDashboardMenu(BuildContext context, {Language language}) {
+  List<Widget> _buildDashboardMenu(BuildContext context, {Language language}) {
     if (language == Language.English) {
       List<Widget> children = [
         _buildMenuItem(
@@ -118,67 +192,38 @@ class _HomeScreenState extends State<HomeScreen> {
       ];
       return _buildDashboard(context, children: children);
     } else {
-      return RefreshIndicator(
-        child: Consumer<ChinesePageProvider>(
-          builder: (context, model, _) {
-            if (model.allChinesePages == null) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return _buildDashboard(
-              context,
-              children: <Widget>[
-                ...model.allChinesePages.map((page) {
-                  return _buildMenuItem(
-                    context,
-                    title: page.name,
-                    screenId: ChinesePageScreen.id,
-                    page: page,
-                  );
-                }).toList(),
-                // _buildMenuItem(
-                //   context,
-                //   title: '联系',
-                //   iconData: FontAwesomeIcons.phone,
-                //   color: Colors.amber,
-                //   screenId: FeedbackScreen.id,
-                // ),
-              ],
-            );
-          },
-        ),
-        onRefresh: () {
-          return Provider.of<ChinesePageProvider>(context, listen: false)
-              .fetchAllChinesePages();
-        },
-      );
+      //Chinese Page
+      if (Provider.of<ChinesePageProvider>(context).allChinesePages == null) {
+        return [Center(child: CircularProgressIndicator())];
+      } else {
+        return _buildDashboard(
+          context,
+          children: <Widget>[
+            ...Provider.of<ChinesePageProvider>(context)
+                .allChinesePages
+                .map((page) {
+              return _buildMenuItem(
+                context,
+                title: page.name,
+                screenId: ChinesePageScreen.id,
+                page: page,
+              );
+            }).toList(),
+            // _buildMenuItem(
+            //   context,
+            //   title: '联系',
+            //   iconData: FontAwesomeIcons.phone,
+            //   color: Colors.amber,
+            //   screenId: FeedbackScreen.id,
+            // ),
+          ],
+        );
+      }
     }
   }
 
-  Widget _buildDashboard(BuildContext context, {List<Widget> children}) {
-    return StaggeredGridView.countBuilder(
-      padding: EdgeInsets.all(10),
-      crossAxisCount: 3,
-      itemCount: children.length,
-      itemBuilder: (BuildContext context, int index) => new Container(
-        child: children[index],
-      ),
-      staggeredTileBuilder: (int index) => new StaggeredTile.count(
-          _getCrossAxisSpan(index), _getMainAxisSpan(index)),
-      mainAxisSpacing: 4.0,
-      crossAxisSpacing: 4.0,
-    );
-  }
-
-  int _getCrossAxisSpan(int index) {
-    if (index == 0 || index % 3 == 0) return 3;
-    if (index % 4 == 0 || index % 2 == 0) return 2;
-    return 1;
-  }
-
-  int _getMainAxisSpan(int index) {
-    // if (index == 0 || index % 3 == 0) return 2;
-    // if (index % 4 == 0 || index % 2 == 0) return 2;
-    return 1;
+  List<Widget> _buildDashboard(BuildContext context, {List<Widget> children}) {
+    return children;
   }
 
   Widget _buildMenuItem(BuildContext context,
@@ -188,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
       String screenId,
       ChinesePage page}) {
     return Container(
-      margin: EdgeInsets.all(5.0),
+      margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         boxShadow: [BoxShadow(blurRadius: 3)],
         borderRadius: BorderRadius.circular(10),
@@ -239,14 +284,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: Text(
-                    title.toUpperCase(),
+                    title,
                     style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontFamily: Theme.of(context).textTheme.body1.fontFamily,
                       fontSize: 17.0,
                       color: Colors.white,
-
-                      // color: Colors.white,
                     ),
                   ),
                 )
