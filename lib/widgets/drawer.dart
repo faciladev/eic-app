@@ -22,6 +22,9 @@ class MyDrawer extends StatelessWidget {
       menu = <Widget>[
         buildDrawerHeader(context),
         Consumer<ChinesePageProvider>(builder: (context, model, _) {
+          if (model.allChinesePages == null) {
+            return Center(child: CircularProgressIndicator());
+          }
           return Column(
             children: [
               ...List.generate(model.allChinesePages.length, (index) {
@@ -118,17 +121,16 @@ class MyDrawer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          // color: Theme.of(context).primaryColor,
-
-          image: DecorationImage(
-            image: AssetImage('assets/images/background3.jpg'),
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.bottomCenter,
-            colorFilter: ColorFilter.mode(
-              Colors.grey,
-              BlendMode.exclusion,
-            ),
-          ),
+          color: Theme.of(context).primaryColor,
+          // image: DecorationImage(
+          //   image: AssetImage('assets/images/background.jpg'),
+          //   fit: BoxFit.cover,
+          //   alignment: Alignment.bottomCenter,
+          //   // colorFilter: ColorFilter.mode(
+          //   //   Theme.of(context).primaryColor,
+          //   //   BlendMode.lighten,
+          //   // ),
+          // ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

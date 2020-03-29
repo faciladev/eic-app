@@ -139,7 +139,7 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
               ),
             );
           } else {
-            textOrImage = Text(
+            textOrImage = SelectableText(
               stringData,
               style: Theme.of(context).textTheme.body1,
             );
@@ -166,6 +166,8 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
 
 void addTableToPage(
     List<Widget> body, List<DataColumn> dataColumns, List<DataRow> dataRows) {
+  // print(dataColumns);
+  print(dataRows);
   //Check if table is empty
   if (dataColumns.length == 0 && dataRows.length == 0) {
     return;
@@ -220,12 +222,6 @@ void addTableToPage(
     ),
   );
 
-  // PaginatedDataTable(
-  //   columns: dataColumns,
-  //   header: Container(),
-  //   source: EicTableSource(rows: dataRows),
-  // );
-
   _buildVerticalSpace(body);
 }
 
@@ -247,12 +243,14 @@ List<Widget> buildListChildren(value) {
   List<dynamic> lists = value;
   List<Widget> children = lists.map((list) {
     return ListTile(
+      dense: true,
       leading: Icon(
-        Icons.check_circle,
-        size: 20.0,
+        Icons.arrow_forward_ios,
+        size: 18.0,
       ),
-      title: Text(
+      title: SelectableText(
         list,
+        style: TextStyle(fontSize: 18),
       ),
     );
   }).toList();

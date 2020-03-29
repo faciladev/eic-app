@@ -1,4 +1,5 @@
 import 'package:eicapp/providers/chinese_page.dart';
+import 'package:eicapp/providers/config_profider.dart';
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/providers/feedback.dart';
 import 'package:eicapp/providers/incentive.dart';
@@ -24,11 +25,13 @@ import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/setting.dart';
 import 'package:eicapp/screens/setting_list.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 import 'package:eicapp/screens/language.dart';
 import 'package:eicapp/screens/news_list.dart';
 import 'package:eicapp/screens/feedback.dart';
+import 'package:eicapp/env/prod.dart'; //exports config variable
 
 void main() => runApp(
       MultiProvider(
@@ -37,29 +40,32 @@ void main() => runApp(
           //   builder: (context) => LanguageProvider(),
           // ),
           ChangeNotifierProvider(
-            create: (context) => NewsProvider(),
+            create: (context) => ConfigProvider(config: config),
           ),
           ChangeNotifierProvider(
-            create: (context) => IncentiveProvider(),
+            create: (context) => NewsProvider(context: context),
           ),
           ChangeNotifierProvider(
-            create: (context) => SectorProvider(),
+            create: (context) => IncentiveProvider(context: context),
           ),
           ChangeNotifierProvider(
-            create: (context) => CountryProfileProvider(),
+            create: (context) => SectorProvider(context: context),
           ),
           ChangeNotifierProvider(
-            create: (context) => ServiceProvider(),
+            create: (context) => CountryProfileProvider(context: context),
           ),
           ChangeNotifierProvider(
-            create: (context) => ChinesePageProvider(),
+            create: (context) => ServiceProvider(context: context),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ChinesePageProvider(context: context),
           ),
           ChangeNotifierProvider(
             create: (context) => SettingProvider(),
           ),
           ChangeNotifierProvider(
-            create: (context) => FeedbackProvider(),
-          )
+            create: (context) => FeedbackProvider(context: context),
+          ),
         ],
         child: MyApp(),
       ),

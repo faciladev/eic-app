@@ -68,42 +68,72 @@ class _HomeScreenState extends State<HomeScreen> {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          // color: Colors.white,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.8),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 3,
+                                color: Colors.black.withOpacity(0.4),
+                              )
+                            ],
+                          ),
                           child: CarouselSlider(
-                            autoPlay: true,
-                            autoPlayAnimationDuration: Duration(seconds: 5),
-                            pauseAutoPlayOnTouch: Duration(seconds: 10),
-                            // enlargeCenterPage: true,
-                            height: MediaQuery.of(context).size.height * 0.30,
-                            items: [2, 3, 4].map((i) {
+                            // autoPlay: true,
+                            // autoPlayAnimationDuration: Duration(seconds: 5),
+                            // pauseAutoPlayOnTouch: Duration(seconds: 5),
+                            enlargeCenterPage: true,
+                            height: MediaQuery.of(context).size.height * 0.40,
+
+                            items: [
+                              {
+                                "img": "background6.jpg",
+                                "label": "Agro-business"
+                              },
+                              {
+                                "img": "background7.jpg",
+                                "label": "Tourism and Hospitality"
+                              },
+                              {
+                                "img": "background8.jpg",
+                                "label": "Manufacturing"
+                              },
+                            ].map((item) {
+                              final String img = item['img'];
                               return Builder(
                                 builder: (BuildContext context) {
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     margin:
-                                        EdgeInsets.symmetric(horizontal: 5.0),
+                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                    padding: EdgeInsets.all(10.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 5,
-                                          color: Colors.black87,
+                                          spreadRadius: 2,
+                                          color:
+                                              Colors.black87.withOpacity(0.2),
                                         )
                                       ],
                                       color: Theme.of(context).primaryColor,
                                       image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/background$i.jpg'),
+                                        image: AssetImage('assets/images/$img'),
                                         fit: BoxFit.cover,
                                         alignment: Alignment.topCenter,
                                       ),
                                     ),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          'Tourism Sector is booming',
+                                          item['label'],
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20,
@@ -125,13 +155,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  SliverGrid(
-                    delegate: SliverChildListDelegate(
-                      _buildDashboardMenu(context, language: model.language),
+                  // SliverGrid(
+                  //   delegate: SliverChildListDelegate(
+                  //     _buildDashboardMenu(context, language: model.language),
+                  //   ),
+                  //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //       crossAxisCount: 3),
+                  // ),
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate(
+                        _buildDashboardMenu(context, language: model.language),
+                      ),
                     ),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                  ),
+                  )
                 ]
                     // _buildDashboardMenu(context, language: model.language)),
                     ))
@@ -148,12 +186,12 @@ class _HomeScreenState extends State<HomeScreen> {
         _buildMenuItem(
           context,
           title: 'Get Started',
-          iconData: FontAwesomeIcons.paw,
+          iconData: FontAwesomeIcons.infoCircle,
           color: Colors.tealAccent,
         ),
         _buildMenuItem(
           context,
-          title: 'Profile',
+          title: 'Country Profile',
           iconData: FontAwesomeIcons.globeAfrica,
           color: Colors.cyan,
           screenId: CountryProfileListScreen.id,
@@ -233,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
       String screenId,
       ChinesePage page}) {
     return Container(
-      margin: EdgeInsets.all(15.0),
+      margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         boxShadow: [BoxShadow(blurRadius: 3)],
         borderRadius: BorderRadius.circular(10),
@@ -264,36 +302,56 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
           child: Container(
-            height: 120,
-            width: 120,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                iconData == null
-                    ? Container()
+              // height: 120,
+              padding: EdgeInsets.symmetric(horizontal: 50.0),
+              child: ListTile(
+                leading: iconData == null
+                    ? null
                     : Icon(
                         iconData,
-                        size: 50.0,
+                        size: 30.0,
                         color: color,
                         // color: Colors.white,
                       ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 17.0,
-                      color: Colors.white,
-                    ),
+                title: Text(
+                  title.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    color: Colors.white,
+                    // color: Theme.of(context).primaryColor,
                   ),
-                )
-              ],
-            ),
-          ),
+                ),
+              )
+              //     Row(
+              //   mainAxisSize: MainAxisSize.min,
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     iconData == null
+              //         ? null
+              //         : Icon(
+              //             iconData,
+              //             size: 50.0,
+              //             color: color,
+              //             // color: Colors.white,
+              //           ),
+              //     SizedBox(
+              //       height: 10.0,
+              //     ),
+              //     Padding(
+              //       padding: EdgeInsets.symmetric(horizontal: 0.0),
+              //       child: Text(
+              //         title,
+              //         style: TextStyle(
+              //           fontSize: 17.0,
+              //           color: Colors.white,
+              //           // color: Theme.of(context).primaryColor,
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // ),
+              ),
         ),
       ),
     );

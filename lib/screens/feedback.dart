@@ -30,7 +30,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       });
       _formKey.currentState.save();
       FeedbackModel feedback =
-          FeedbackModel(from: _email, message: _message, subject: _subject);
+          FeedbackModel(sender: _email, message: _message, subject: _subject);
       sent = await Provider.of<FeedbackProvider>(context, listen: false)
           .sendEmail(feedback);
       if (sent) {

@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:eicapp/env/config.dart';
 import 'package:eicapp/models/opportunity.dart';
 import 'package:eicapp/models/step.dart';
+import 'package:eicapp/providers/config_profider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:eicapp/models/country_profile.dart';
@@ -17,12 +20,16 @@ class CountryProfileProvider extends ChangeNotifier {
   List<dynamic> allSteps;
   StepModel selectedStep;
 
-  Future<void> fetchAllCountryProfiles() async {
-    if (allCountryProfiles != null) return;
+  final BuildContext context;
 
-    final response = await http.get(
-        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/country-profiles');
-    // final response = await http.get('http://10.0.2.2:3000/country-profiles');
+  CountryProfileProvider({this.context});
+
+  Future<void> fetchAllCountryProfiles() async {
+    String url =
+        Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
+
+    if (allCountryProfiles != null) return;
+    final response = await http.get(url + 'country-profiles?format=json');
     if (response.statusCode == 200) {
       allCountryProfiles = jsonDecode(response.body)
           .map((json) => CountryProfile.fromJson(json))

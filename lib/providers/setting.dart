@@ -46,17 +46,6 @@ class SettingProvider extends ChangeNotifier {
     await loadSettings();
   }
 
-  // Future<Setting> loadSetting(String name) async {
-  //   final Database db = await database;
-  //   final List<Map<String, dynamic>> languageSetting = await db
-  //       .query('settings', where: 'name = ?', whereArgs: [name], limit: 1);
-  //   if (languageSetting.length <= 0) {
-  //     return null;
-  //   }
-
-  //   return Setting.fromJson(languageSetting[0]);
-  // }
-
   Future<void> loadSettings() async {
     final Database db = await database;
     final List<Map<String, dynamic>> settings = await db.query('settings');

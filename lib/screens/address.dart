@@ -21,11 +21,11 @@ class AddressScreen extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Text('Addis Ababa, Ethiopia'),
-                    Text('P.O. Box 2313'),
-                    Text('Tel: +251 11 551 0033'),
-                    Text('Fax: +251 11 551 4396'),
-                    Text('Email: info@eic.gov.et'),
+                    SelectableText('Addis Ababa, Ethiopia'),
+                    SelectableText('P.O. Box 2313'),
+                    SelectableText('Tel: +251 11 551 0033'),
+                    SelectableText('Fax: +251 11 551 4396'),
+                    SelectableText('Email: info@eic.gov.et'),
                   ],
                 ),
               ],
@@ -45,7 +45,7 @@ class AddressScreen extends StatelessWidget {
                         SizedBox(
                           width: 10.0,
                         ),
-                        Text(
+                        SelectableText(
                           '@EthioInvestment',
                           style: TextStyle(
                             color: Theme.of(context).secondaryHeaderColor,

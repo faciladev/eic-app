@@ -1,15 +1,15 @@
 class FeedbackModel {
-  final String from;
+  final String sender;
   final String subject;
   final String message;
 
   FeedbackModel({
-    this.from,
+    this.sender,
     this.subject,
     this.message,
   });
 
   Map<String, dynamic> toMap() {
-    return {'from': from, 'subject': subject, 'message': message};
+    return {'sender': sender, 'subject': subject, 'message': message};
   }
 }

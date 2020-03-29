@@ -1,16 +1,24 @@
 import 'dart:convert';
 
+import 'package:eicapp/providers/config_profider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:eicapp/models/news.dart';
+import 'package:provider/provider.dart';
 
 class NewsProvider extends ChangeNotifier {
   List<dynamic> allNews;
   News selectedNews;
 
+  final BuildContext context;
+
+  NewsProvider({this.context});
+
   Future<void> fetchAllNews() async {
-    final response = await http.get(
-        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/news?filter[limit]=10');
+    String url =
+        Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
+    final response = await http.get(url + 'news?format=json');
 
     if (response.statusCode == 200) {
       allNews =

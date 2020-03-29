@@ -1,16 +1,23 @@
 import 'dart:convert';
 
 import 'package:eicapp/models/service.dart';
+import 'package:eicapp/providers/config_profider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class ServiceProvider extends ChangeNotifier {
   List<dynamic> allServices;
   Service selectedService;
+  final BuildContext context;
+
+  ServiceProvider({this.context});
 
   Future<void> fetchAllServices() async {
-    final response = await http.get(
-        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/services');
+    String url =
+        Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
+    final response = await http.get(url + 'services?format=json');
 
     if (response.statusCode == 200) {
       allServices = jsonDecode(response.body)

@@ -1,17 +1,24 @@
 import 'dart:convert';
 
+import 'package:eicapp/providers/config_profider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:eicapp/models/chinese_page.dart';
+import 'package:provider/provider.dart';
 
 class ChinesePageProvider extends ChangeNotifier {
   List<dynamic> allChinesePages;
   ChinesePage selectedChinesePage;
 
+  final BuildContext context;
+
+  ChinesePageProvider({this.context});
+
   Future<void> fetchAllChinesePages() async {
-    final response = await http.get(
-        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/ChinesePages');
-    // final response = await http.get('http://10.0.2.2:3000/ChinesePages');
+    String url =
+        Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
+    final response = await http.get(url + 'chinesepages?format=json');
 
     if (response.statusCode == 200) {
       allChinesePages = jsonDecode(utf8.decode(response.bodyBytes))

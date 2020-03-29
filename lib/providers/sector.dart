@@ -1,17 +1,23 @@
 import 'dart:convert';
 
+import 'package:eicapp/providers/config_profider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:eicapp/models/sector.dart';
+import 'package:provider/provider.dart';
 
 class SectorProvider extends ChangeNotifier {
   List<dynamic> allSectors;
   Sector selectedSector;
+  final BuildContext context;
+
+  SectorProvider({this.context});
 
   Future<void> fetchAllSectors() async {
-    final response = await http.get(
-        'http://ec2-18-191-74-44.us-east-2.compute.amazonaws.com:3000/sectors');
-    // final response = await http.get('http://10.0.2.2:3000/sectors');
+    String url =
+        Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
+    final response = await http.get(url + 'sectors?format=json');
 
     if (response.statusCode == 200) {
       allSectors = jsonDecode(response.body)
