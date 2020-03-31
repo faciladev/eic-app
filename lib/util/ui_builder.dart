@@ -1,5 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class MyPathClipper extends CustomClipper<Path> {
   final double height1;
@@ -132,10 +132,13 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
               stringData.toLowerCase().endsWith('gif')) {
             textOrImage = Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FadeInImage.memoryNetwork(
-                fit: BoxFit.cover,
-                placeholder: kTransparentImage,
-                image: stringData,
+              child: Center(
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  imageUrl: stringData,
+                ),
               ),
             );
           } else {
@@ -166,8 +169,6 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
 
 void addTableToPage(
     List<Widget> body, List<DataColumn> dataColumns, List<DataRow> dataRows) {
-  // print(dataColumns);
-  print(dataRows);
   //Check if table is empty
   if (dataColumns.length == 0 && dataRows.length == 0) {
     return;
@@ -266,12 +267,6 @@ List<DataRow> buildDataRows(List rows, List headers) {
     for (int num = 0; num < rows.length; num++) {
       List<DataCell> dataCells = [];
       if (rows[num].length != headers.length) {
-        // print('<Headers>');
-        // print(headers);
-        // print('</Headers>');
-        // print('<Rows>');
-        // print(rows[num]);
-        // print('</Rows>');
         if (rows[num].length > headers.length) {
           headers = _equalizeRows(headers, rows[num]);
         } else {
@@ -291,20 +286,12 @@ List<DataRow> buildDataRows(List rows, List headers) {
 }
 
 List _equalizeRows(List listToPopulate, List overflowList) {
-  // print('<Overflow>');
-  // print(overflowList);
-  // print('</Overflow>');
-  // print('<pre-populate>');
-  // print(listToPopulate);
-  // print('</pre-populate>');
   for (int count = 0;
       count < (overflowList.length - listToPopulate.length);
       count++) {
     listToPopulate.add("");
   }
-  // print('<post-populate>');
-  // print(listToPopulate);
-  // print('</post-populate>');
+
   return listToPopulate;
 }
 

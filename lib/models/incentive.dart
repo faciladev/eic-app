@@ -22,6 +22,21 @@ class Incentive {
       this.implementingAuthority,
       this.incentivePackage});
 
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "name": name,
+      "description": description,
+      "legalReference": legalReference,
+      "lawSection": lawSection,
+      "sector": sector,
+      "eligebility": eligebility,
+      "rewardingAuthority": rewardingAuthority,
+      "implementingAuthority": implementingAuthority,
+      "incentivePackage": incentivePackage
+    };
+  }
+
   factory Incentive.fromJson(Map<String, dynamic> json) {
     return Incentive(
       id: json['id'],

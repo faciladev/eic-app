@@ -1,10 +1,10 @@
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/loading.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class SectorScreen extends StatefulWidget {
   static final String id = 'sector_screen';
@@ -17,6 +17,18 @@ class SectorScreen extends StatefulWidget {
 class _SectorScreenState extends State<SectorScreen> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+
+    if (args != null) {
+      Provider.of<SectorProvider>(context).selectSectorByAttributes(args);
+    }
+
+    if (Provider.of<SectorProvider>(context).selectedSector == null) {
+      return Loading(
+        isPage: true,
+      );
+    }
+
     String title = Provider.of<SectorProvider>(context).selectedSector.name;
     return Page(
       appBar: MyAppBar(

@@ -1,10 +1,10 @@
 import 'package:eicapp/providers/service.dart';
+import 'package:eicapp/widgets/loading.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ServiceScreen extends StatefulWidget {
   static final String id = 'service_screen';
@@ -17,6 +17,18 @@ class ServiceScreen extends StatefulWidget {
 class _ServiceScreenState extends State<ServiceScreen> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+
+    if (args != null) {
+      Provider.of<ServiceProvider>(context).selectServiceByAttributes(args);
+    }
+
+    if (Provider.of<ServiceProvider>(context).selectedService == null) {
+      return Loading(
+        isPage: true,
+      );
+    }
+
     String title = Provider.of<ServiceProvider>(context).selectedService.name;
 
     return Page(
@@ -45,7 +57,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
   Widget _buildRequirements(List requirements) {
     return Column(
       children: requirements.map((requirement) {
-        print(requirement['DescriptionEnglish']);
         return Padding(
           padding: EdgeInsets.all(8.0),
           child: ListTile(

@@ -7,7 +7,7 @@ import 'package:eicapp/providers/news.dart';
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/providers/service.dart';
 import 'package:eicapp/providers/setting.dart';
-import 'package:eicapp/screens/address.dart';
+import 'package:eicapp/providers/slider.dart';
 import 'package:eicapp/screens/bootstrap.dart';
 import 'package:eicapp/screens/chinese_page.dart';
 import 'package:eicapp/screens/country_profile.dart';
@@ -16,7 +16,6 @@ import 'package:eicapp/screens/home.dart';
 import 'package:eicapp/screens/incentive.dart';
 import 'package:eicapp/screens/incentive_list.dart';
 import 'package:eicapp/screens/incentive_package_list.dart';
-import 'package:eicapp/screens/landing.dart';
 import 'package:eicapp/screens/news.dart';
 import 'package:eicapp/screens/sector.dart';
 import 'package:eicapp/screens/sector_list.dart';
@@ -25,7 +24,6 @@ import 'package:eicapp/screens/service_list.dart';
 import 'package:eicapp/screens/setting.dart';
 import 'package:eicapp/screens/setting_list.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 import 'package:eicapp/screens/language.dart';
@@ -36,11 +34,11 @@ import 'package:eicapp/env/prod.dart'; //exports config variable
 void main() => runApp(
       MultiProvider(
         providers: [
-          // ChangeNotifierProvider(
-          //   builder: (context) => LanguageProvider(),
-          // ),
           ChangeNotifierProvider(
             create: (context) => ConfigProvider(config: config),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => SlideProvider(context: context),
           ),
           ChangeNotifierProvider(
             create: (context) => NewsProvider(context: context),
@@ -102,7 +100,6 @@ class MyApp extends StatelessWidget {
         HomeScreen.id: (context) => HomeScreen(),
         NewsListScreen.id: (context) => NewsListScreen(),
         FeedbackScreen.id: (context) => FeedbackScreen(),
-        LandingScreen.id: (context) => LandingScreen(),
         NewsScreen.id: (context) => NewsScreen(),
         IncentivePackageListScreen.id: (context) =>
             IncentivePackageListScreen(),
@@ -118,11 +115,6 @@ class MyApp extends StatelessWidget {
         SettingListScreen.id: (context) => SettingListScreen(),
         SettingScreen.id: (context) => SettingScreen(),
         LanguageScreen.id: (context) => LanguageScreen(),
-        // OpportunityListScreen.id: (context) => OpportunityListScreen(),
-        // OpportunityScreen.id: (context) => OpportunityScreen(),
-        // StepListScreen.id: (context) => StepListScreen(),
-        // StepScreen.id: (context) => StepScreen(),
-        AddressScreen.id: (context) => AddressScreen(),
       },
     );
   }

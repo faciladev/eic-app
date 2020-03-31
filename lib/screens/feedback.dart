@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:eicapp/models/feedback.dart';
 import 'package:eicapp/providers/feedback.dart';
-import 'package:eicapp/screens/address.dart';
-import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
-import 'package:eicapp/widgets/stackPage.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class FeedbackScreen extends StatefulWidget {
@@ -23,6 +21,33 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   String _email, _message, _subject;
   bool sent = false;
   bool sending = false;
+
+  Future<void> _showSuccessAlert({suceess: true}) async {
+    String title = suceess ? "Message was sent!" : "Message was not sent!";
+    String body =
+        suceess ? 'Thanks for your feedback.' : 'Please try again, later.';
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: Text(body),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Done'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _submit() async {
     if (_formKey.currentState.validate()) {
       setState(() {
@@ -33,14 +58,14 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           FeedbackModel(sender: _email, message: _message, subject: _subject);
       sent = await Provider.of<FeedbackProvider>(context, listen: false)
           .sendEmail(feedback);
-      if (sent) {
-        _formKey.currentState.reset();
-        Timer(Duration(seconds: 1), () {
-          setState(() {
-            sent = true;
-          });
+      if (!sent) {
+        _showSuccessAlert(suceess: false);
+        setState(() {
+          sending = false;
         });
       }
+      _showSuccessAlert();
+      _formKey.currentState.reset();
       setState(() {
         sending = false;
       });
@@ -71,6 +96,74 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Widget addressContent = Container(
+      margin: EdgeInsets.all(20.0),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  SelectableText('Addis Ababa, Ethiopia'),
+                  SelectableText('P.O. Box 2313'),
+                  SelectableText('Tel: +251 11 551 0033'),
+                  SelectableText('Fax: +251 11 551 4396'),
+                  SelectableText('Email: info@ethio-invest.com'),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Divider(),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        FontAwesomeIcons.twitter,
+                        color: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      SelectableText(
+                        '@EthioInvestment',
+                        style: TextStyle(
+                          color: Colors.blue,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        FontAwesomeIcons.facebook,
+                        color: Colors.blue[900],
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(
+                        'InvestEthiopia',
+                        style: TextStyle(
+                          color: Colors.blue[900],
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ],
+          )
+        ],
+      ),
+    );
     Widget pageContent = Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +173,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           child: Column(
             children: <Widget>[
               _buildTextField(
-                labelText: "Email",
+                labelText: "Your Email",
                 keyboardType: TextInputType.emailAddress,
                 validator: (input) =>
                     !input.contains('@') ? 'Please enter a valid email' : null,
@@ -112,27 +205,22 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       ],
     );
 
-    return StackPage(
+    return Page(
       appBar: MyAppBar(
         context,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.info_outline),
-            onPressed: () {
-              Navigator.pushNamed(context, AddressScreen.id);
-            },
-          )
-        ],
         title: "Contact",
       ),
-      customClipper: MyPathClipper(height1: 0.30, height2: 0.40),
-      shadow: Shadow(blurRadius: 5),
-      image: DecorationImage(
-        image: AssetImage('assets/images/background3.jpg'),
-        fit: BoxFit.cover,
+      pageContent: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            addressContent,
+            SizedBox(
+              height: 20.0,
+            ),
+            pageContent
+          ],
+        ),
       ),
-      pageContent: pageContent,
-      pageContentOffsetPercent: 0.35,
     );
   }
 

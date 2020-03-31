@@ -24,4 +24,14 @@ class Sector {
       url: json['url'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "name": name,
+      "image": image,
+      "url": url,
+      "content": content
+    };
+  }
 }

@@ -9,6 +9,10 @@ class Opportunity {
     this.content,
   });
 
+  Map<String, dynamic> toMap() {
+    return {"id": id, "name": name, "content": content};
+  }
+
   factory Opportunity.fromJson(Map<String, dynamic> json) {
     return Opportunity(
       id: json['id'],

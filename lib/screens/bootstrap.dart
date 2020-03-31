@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:eicapp/models/setting.dart';
-import 'package:eicapp/providers/config_profider.dart';
 import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/screens/home.dart';
 import 'package:eicapp/screens/language.dart';
@@ -58,12 +55,6 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Expanded(
-            //   child: Image(
-            //     image: AssetImage('assets/images/logo.jpg'),
-            //     fit: BoxFit.fitWidth,
-            //   ),
-            // ),
             CircularProgressIndicator(),
             SizedBox(
               height: 20.0,
@@ -72,9 +63,6 @@ class _BootstrapScreenState extends State<BootstrapScreen> {
               'Please wait...',
               style: Theme.of(context).textTheme.body1,
             ),
-            // SizedBox(
-            //   height: 20.0,
-            // ),
           ],
         ),
       );

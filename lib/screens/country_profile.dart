@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/country_profile.dart';
 import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/loading.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
@@ -17,22 +18,26 @@ class CountryProfileScreen extends StatefulWidget {
 class _CountryProfileScreenState extends State<CountryProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final dynamic args = ModalRoute.of(context).settings.arguments;
     String title;
     Widget pageContent;
+
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+
     if (args != null) {
-      Provider.of<CountryProfileProvider>(context).fetchAllCountryProfiles();
       Provider.of<CountryProfileProvider>(context)
-          .selectCountryProfileByName(args['profileName']);
-      title = args['profileName'];
+          .selectCountryProfileByName(args['name']);
     }
 
-    if (Provider.of<CountryProfileProvider>(context).selectedCountryProfile !=
+    if (Provider.of<CountryProfileProvider>(context).selectedCountryProfile ==
         null) {
-      title = Provider.of<CountryProfileProvider>(context)
-          .selectedCountryProfile
-          .name;
+      return Loading(
+        isPage: true,
+      );
     }
+
+    title = Provider.of<CountryProfileProvider>(context)
+        .selectedCountryProfile
+        .name;
 
     pageContent = WillPopScope(
       child: SingleChildScrollView(

@@ -22,7 +22,7 @@ class Page extends StatelessWidget {
         decoration: background
             ? BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/background1.jpg'),
+                  image: AssetImage('assets/images/page_background.jpg'),
                   fit: BoxFit.cover,
                 ),
               )

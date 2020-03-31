@@ -3,7 +3,6 @@ import 'package:eicapp/providers/setting.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
-// import 'package:eicapp/providers/language.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,26 +41,10 @@ class SettingScreen extends StatelessWidget {
                   Language.Chinese,
                 ),
               ),
-              // _buildLanguageItem(context, model, Language.English),
-              // _buildLanguageItem(context, model, Language.Chinese),
             ],
           ),
         ]),
       );
-
-      // return Scaffold(
-      //     appBar: MyAppBar(
-      //       context,
-      //       title: label,
-      //     ),
-      //     body: ListView(children: <Widget>[
-      //       Column(
-      //         children: <Widget>[
-      //           _buildLanguageItem(context, model, Language.English),
-      //           _buildLanguageItem(context, model, Language.Chinese),
-      //         ],
-      //       ),
-      //     ]));
     });
   }
 

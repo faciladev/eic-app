@@ -1,7 +1,6 @@
 import 'package:eicapp/models/sector.dart';
 import 'package:eicapp/providers/sector.dart';
 import 'package:eicapp/screens/sector.dart';
-import 'package:eicapp/widgets/drawer.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';

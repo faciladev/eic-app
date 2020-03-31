@@ -30,6 +30,19 @@ class ChinesePageProvider extends ChangeNotifier {
     }
   }
 
+  void selectPageByAttributes(Map<String, dynamic> attributes) async {
+    if (allChinesePages == null) {
+      await fetchAllChinesePages();
+    }
+
+    selectedChinesePage = allChinesePages.singleWhere((page) {
+      return attributes.keys.every((key) {
+        Map<String, dynamic> resource = page.toMap();
+        return resource[key] == attributes[key];
+      });
+    }, orElse: () => null);
+  }
+
   void selectChinesePage(ChinesePage chinesePage) =>
       selectedChinesePage = chinesePage;
   void unselectChinesePage() => selectedChinesePage = null;

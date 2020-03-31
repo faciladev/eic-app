@@ -9,6 +9,10 @@ class StepModel {
     this.content,
   });
 
+  Map<String, dynamic> toMap() {
+    return {"id": id, "name": name, "content": content};
+  }
+
   factory StepModel.fromJson(Map<String, dynamic> json) {
     return StepModel(
       id: json['id'],

@@ -9,6 +9,14 @@ class CountryProfile {
     this.content,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "name": name,
+      "content": content,
+    };
+  }
+
   factory CountryProfile.fromJson(Map<String, dynamic> json) {
     return CountryProfile(
       id: json['id'],

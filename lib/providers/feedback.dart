@@ -12,7 +12,15 @@ class FeedbackProvider extends ChangeNotifier {
 
   FeedbackProvider({this.context});
 
-  bool sent = false;
+  bool _sent = false;
+  bool isSent() {
+    return _sent;
+  }
+
+  void sent(bool state) {
+    _sent = state;
+  }
+
   Future<bool> sendEmail(FeedbackModel feedback) async {
     String url =
         Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
@@ -31,7 +39,6 @@ class FeedbackProvider extends ChangeNotifier {
       }
       return false;
     } catch (e) {
-      print(e);
       throw Exception('Failed to send email');
     }
   }

@@ -1,11 +1,8 @@
-import 'package:eicapp/models/news.dart';
 import 'package:eicapp/providers/news.dart';
-import 'package:eicapp/screens/feedback.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:eicapp/widgets/drawer.dart';
 
 import 'news.dart';
 
@@ -31,7 +28,6 @@ class _NewsListScreenState extends State<NewsListScreen> {
           context,
           title: 'News and Events',
         ),
-        // endDrawer: MyDrawer(),
         body: RefreshIndicator(
           child: _buildAllNews(),
           onRefresh: () {

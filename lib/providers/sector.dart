@@ -29,6 +29,19 @@ class SectorProvider extends ChangeNotifier {
     }
   }
 
+  void selectSectorByAttributes(Map<String, dynamic> attributes) async {
+    if (allSectors == null) {
+      await fetchAllSectors();
+    }
+
+    selectedSector = allSectors.singleWhere((sector) {
+      return attributes.keys.every((key) {
+        Map<String, dynamic> resource = sector.toMap();
+        return resource[key] == attributes[key];
+      });
+    }, orElse: () => null);
+  }
+
   void selectSector(Sector sector) => selectedSector = sector;
   void unselectSector() => selectedSector = null;
 }

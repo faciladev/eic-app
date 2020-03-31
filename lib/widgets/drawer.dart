@@ -67,14 +67,17 @@ class MyDrawer extends StatelessWidget {
             iconData: FontAwesomeIcons.newspaper),
         _buildDrawerItem(
             context: context,
+            itemName: 'Get Started',
+            iconData: FontAwesomeIcons.paw),
+        _buildDrawerItem(
+            context: context,
             itemName: 'Country Profile',
             screenId: CountryProfileListScreen.id,
             iconData: FontAwesomeIcons.globeAfrica),
         _buildDrawerItem(
             context: context,
-            itemName: 'Services',
-            screenId: ServiceListScreen.id,
-            iconData: FontAwesomeIcons.cogs),
+            itemName: 'Opportunities',
+            iconData: FontAwesomeIcons.solidLightbulb),
         _buildDrawerItem(
             context: context,
             itemName: 'Investment Incentives',
@@ -87,12 +90,9 @@ class MyDrawer extends StatelessWidget {
             iconData: FontAwesomeIcons.industry),
         _buildDrawerItem(
             context: context,
-            itemName: 'Opportunities',
-            iconData: FontAwesomeIcons.solidLightbulb),
-        _buildDrawerItem(
-            context: context,
-            itemName: 'Get Started',
-            iconData: FontAwesomeIcons.paw),
+            itemName: 'Services',
+            screenId: ServiceListScreen.id,
+            iconData: FontAwesomeIcons.cogs),
         _buildDrawerItem(
             context: context,
             itemName: 'Contact',
@@ -180,13 +180,6 @@ class MyDrawer extends StatelessWidget {
       String itemName,
       String screenId,
       IconData iconData}) {
-    final Icon icon = iconData != null
-        ? Icon(
-            iconData,
-            size: 20.0,
-          )
-        : null;
-
     return InkWell(
       splashColor: Theme.of(context).primaryColor,
 

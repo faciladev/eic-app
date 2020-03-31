@@ -1,8 +1,7 @@
 import 'package:eicapp/models/incentive.dart';
 import 'package:eicapp/providers/incentive.dart';
 import 'package:eicapp/screens/incentive.dart';
-import 'package:eicapp/util/ui_builder.dart';
-import 'package:eicapp/widgets/drawer.dart';
+import 'package:eicapp/widgets/loading.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
@@ -20,6 +19,18 @@ class IncentiveListScreen extends StatefulWidget {
 class _IncentiveListScreenState extends State<IncentiveListScreen> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    if (args != null) {
+      Provider.of<IncentiveProvider>(context)
+          .selectPackage(args['incentivePackage']);
+    }
+
+    if (Provider.of<IncentiveProvider>(context).selectedPackage == null) {
+      return Loading(
+        isPage: true,
+      );
+    }
+
     String title = Provider.of<IncentiveProvider>(context).selectedPackage;
 
     return Page(
@@ -55,26 +66,6 @@ class _IncentiveListScreenState extends State<IncentiveListScreen> {
               },
               itemCount: packageIncentives.length,
             );
-            // return Column(
-            //   children: packageIncentives.map((incentive) {
-            //     return Card(
-            //       child: ListTile(
-            //         contentPadding:
-            //             EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-            //         title: Text(
-            //           incentive.name,
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.bold,
-            //           ),
-            //         ),
-            //         trailing: Icon(Icons.navigate_next),
-            //         onTap: () {
-            //           _selectIncentive(incentive);
-            //         },
-            //       ),
-            //     );
-            //   }).toList(),
-            // );
           },
         ),
         onWillPop: () {

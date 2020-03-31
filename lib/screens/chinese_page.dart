@@ -1,5 +1,6 @@
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/util/ui_builder.dart';
+import 'package:eicapp/widgets/loading.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,17 @@ class ChinesePageScreen extends StatefulWidget {
 class _ChinesePageScreenState extends State<ChinesePageScreen> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+
+    if (args != null) {
+      Provider.of<ChinesePageProvider>(context).selectPageByAttributes(args);
+    }
+
+    if (Provider.of<ChinesePageProvider>(context).selectedChinesePage == null) {
+      return Loading(
+        isPage: true,
+      );
+    }
     String title =
         Provider.of<ChinesePageProvider>(context).selectedChinesePage.name;
     return Scaffold(

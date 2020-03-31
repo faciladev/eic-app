@@ -29,6 +29,19 @@ class ServiceProvider extends ChangeNotifier {
     }
   }
 
+  void selectServiceByAttributes(Map<String, dynamic> attributes) async {
+    if (allServices == null) {
+      await fetchAllServices();
+    }
+
+    selectedService = allServices.singleWhere((service) {
+      return attributes.keys.every((key) {
+        Map<String, dynamic> resource = service.toMap();
+        return resource[key] == attributes[key];
+      });
+    }, orElse: () => null);
+  }
+
   void selectService(Service service) => selectedService = service;
   void unselectService() => selectedService = null;
 }

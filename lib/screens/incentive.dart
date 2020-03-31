@@ -1,4 +1,5 @@
 import 'package:eicapp/providers/incentive.dart';
+import 'package:eicapp/widgets/loading.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,16 @@ class IncentiveScreen extends StatefulWidget {
 class _IncentiveScreenState extends State<IncentiveScreen> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    if (args != null) {
+      Provider.of<IncentiveProvider>(context).selectIncentiveByAttributes(args);
+    }
+
+    if (Provider.of<IncentiveProvider>(context).selectedIncentive == null) {
+      return Loading(
+        isPage: true,
+      );
+    }
     return Page(
       appBar: MyAppBar(context),
       background: false,

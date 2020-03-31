@@ -11,6 +11,15 @@ class ChinesePage {
     this.content,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "name": name,
+      "image": image,
+      "content": content,
+    };
+  }
+
   factory ChinesePage.fromJson(Map<String, dynamic> json) {
     return ChinesePage(
       id: json['id'],

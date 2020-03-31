@@ -1,4 +1,5 @@
 import 'package:eicapp/providers/news.dart';
+import 'package:eicapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -14,15 +15,17 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    if (args != null) {
+      Provider.of<NewsProvider>(context).selectNewsByAttributes(args);
+    }
+
+    if (Provider.of<NewsProvider>(context).selectedNews == null) {
+      return Loading(
+        isPage: true,
+      );
+    }
     return Scaffold(
-      // appBar: AppBar(
-      //   actions: <Widget>[
-      //     IconButton(
-      //       icon: Icon(Icons.bookmark_border),
-      //       onPressed: () {},
-      //     )
-      //   ],
-      // ),
       body: WillPopScope(
         onWillPop: () {
           Provider.of<NewsProvider>(context, listen: false).unselectNews();

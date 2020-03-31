@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:eicapp/env/config.dart';
 import 'package:eicapp/models/opportunity.dart';
 import 'package:eicapp/models/step.dart';
 import 'package:eicapp/providers/config_profider.dart';
@@ -94,7 +93,11 @@ class CountryProfileProvider extends ChangeNotifier {
   void selectCountryProfile(CountryProfile countryProfile) =>
       selectedCountryProfile = countryProfile;
 
-  void selectCountryProfileByName(String profileName) {
+  void selectCountryProfileByName(String profileName) async {
+    if (allCountryProfiles == null) {
+      await fetchAllCountryProfiles();
+    }
+
     if (allCountryProfiles != null) {
       selectedCountryProfile = allCountryProfiles.singleWhere((profile) {
         return profile.name == profileName;

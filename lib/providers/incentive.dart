@@ -39,6 +39,19 @@ class IncentiveProvider extends ChangeNotifier {
     }
   }
 
+  void selectIncentiveByAttributes(Map<String, dynamic> attributes) async {
+    if (allIncentives == null) {
+      await fetchAllIncentives();
+    }
+
+    selectedIncentive = allIncentives.singleWhere((incentive) {
+      return attributes.keys.every((key) {
+        Map<String, dynamic> resource = incentive.toMap();
+        return resource[key] == attributes[key];
+      });
+    }, orElse: () => null);
+  }
+
   List<String> get packages => _packages;
   List<dynamic> selectedPackageIncentives() {
     return allIncentives

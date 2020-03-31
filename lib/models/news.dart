@@ -16,6 +16,17 @@ class News {
       this.content,
       this.published});
 
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "title": title,
+      "image": image,
+      "url": url,
+      "content": content,
+      "published": published,
+    };
+  }
+
   factory News.fromJson(Map<String, dynamic> json) {
     return News(
       id: json['id'],

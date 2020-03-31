@@ -9,6 +9,10 @@ class Service {
     this.requirements,
   });
 
+  Map<String, dynamic> toMap() {
+    return {"id": id, "name": name, "requirements": requirements};
+  }
+
   factory Service.fromJson(Map<String, dynamic> json) {
     return Service(
         id: json['id'],

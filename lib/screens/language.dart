@@ -21,17 +21,17 @@ class _LanguageScreenState extends State<LanguageScreen> {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/background2.jpg'),
-              fit: BoxFit.cover,
+              image: AssetImage('assets/images/language_clearsky.png'),
+              fit: BoxFit.fitWidth,
             ),
           ),
         ),
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[Colors.transparent, Colors.white],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: <Color>[Colors.transparent, Colors.white30],
             ),
           ),
         ),

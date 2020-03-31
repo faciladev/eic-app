@@ -1,5 +1,5 @@
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eicapp/providers/slider.dart';
+import 'package:eicapp/widgets/slider.dart';
 import 'package:eicapp/models/chinese_page.dart';
 import 'package:eicapp/providers/chinese_page.dart';
 import 'package:eicapp/providers/setting.dart';
@@ -36,6 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<ChinesePageProvider>(context, listen: false)
           .fetchAllChinesePages();
     }
+    if (Provider.of<SlideProvider>(context, listen: false).slides == null) {
+      Provider.of<SlideProvider>(context, listen: false).fetchSlides();
+    }
   }
 
   @override
@@ -55,23 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
               title: pageTitle ?? '...',
             ),
             drawer: MyDrawer(),
-            // customClipper: MyPathClipper(height1: 0.43, height2: 0.55),
-            // shadow: Shadow(blurRadius: 10),
-            // image: DecorationImage(
-            //   image: AssetImage('assets/images/home1.jpg'),
-            //   fit: BoxFit.cover,
-            //   alignment: Alignment.topCenter,
-            // ),
             pageContent: Container(
-                height: MediaQuery.of(context).size.height,
-                child: CustomScrollView(slivers: <Widget>[
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+              // height: MediaQuery.of(context).size.height,
+              child: CustomScrollView(slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Container(
+                          // padding: const EdgeInsets.symmetric(vertical: 10.0),
                           // color: Colors.white,
-                          alignment: Alignment.center,
+                          // alignment: Alignment.topCenter,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.8),
                             boxShadow: [
@@ -81,98 +77,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                             ],
                           ),
-                          child: CarouselSlider(
-                            // autoPlay: true,
-                            // autoPlayAnimationDuration: Duration(seconds: 5),
-                            // pauseAutoPlayOnTouch: Duration(seconds: 5),
-                            enlargeCenterPage: true,
-                            height: MediaQuery.of(context).size.height * 0.40,
-
-                            items: [
-                              {
-                                "img": "background6.jpg",
-                                "label": "Agro-business"
-                              },
-                              {
-                                "img": "background7.jpg",
-                                "label": "Tourism and Hospitality"
-                              },
-                              {
-                                "img": "background8.jpg",
-                                "label": "Manufacturing"
-                              },
-                            ].map((item) {
-                              final String img = item['img'];
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 10.0),
-                                    padding: EdgeInsets.all(10.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 5,
-                                          spreadRadius: 2,
-                                          color:
-                                              Colors.black87.withOpacity(0.2),
-                                        )
-                                      ],
-                                      color: Theme.of(context).primaryColor,
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/images/$img'),
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.topCenter,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          item['label'],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            backgroundColor:
-                                                Colors.black.withOpacity(0.5),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        )
-                      ],
+                          child: MySlider()),
+                      SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  ),
+                ),
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate(
+                      _buildDashboardMenu(context, language: model.language),
                     ),
                   ),
-                  // SliverGrid(
-                  //   delegate: SliverChildListDelegate(
-                  //     _buildDashboardMenu(context, language: model.language),
-                  //   ),
-                  //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //       crossAxisCount: 3),
-                  // ),
-                  SliverPadding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate(
-                        _buildDashboardMenu(context, language: model.language),
-                      ),
-                    ),
-                  )
-                ]
-                    // _buildDashboardMenu(context, language: model.language)),
-                    ))
+                )
+              ]),
+            )
 
             // pageContentOffsetPercent: 0.40,
             );
@@ -203,11 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.redAccent,
         ),
         _buildMenuItem(context,
-            title: 'Services',
-            iconData: FontAwesomeIcons.cogs,
-            color: Colors.deepOrange[200],
-            screenId: ServiceListScreen.id),
-        _buildMenuItem(context,
             title: 'Incentives',
             iconData: FontAwesomeIcons.drumstickBite,
             color: Colors.deepPurple[200],
@@ -216,7 +132,12 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Sectors',
             iconData: FontAwesomeIcons.industry,
             color: Colors.greenAccent,
-            screenId: SectorListScreen.id)
+            screenId: SectorListScreen.id),
+        _buildMenuItem(context,
+            title: 'Services',
+            iconData: FontAwesomeIcons.cogs,
+            color: Colors.deepOrange[200],
+            screenId: ServiceListScreen.id),
         // _buildMenuItem(context,
         //     title: 'Contact',
         //     iconData: FontAwesomeIcons.phone,
@@ -303,55 +224,26 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Container(
               // height: 120,
-              padding: EdgeInsets.symmetric(horizontal: 50.0),
+              // padding: EdgeInsets.symmetric(horizontal: 50.0),
               child: ListTile(
-                leading: iconData == null
-                    ? null
-                    : Icon(
-                        iconData,
-                        size: 30.0,
-                        color: color,
-                        // color: Colors.white,
-                      ),
-                title: Text(
-                  title.toUpperCase(),
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: Colors.white,
-                    // color: Theme.of(context).primaryColor,
+            leading: iconData == null
+                ? null
+                : Icon(
+                    iconData,
+                    size: 30.0,
+                    color: color,
+                    // color: Colors.white,
                   ),
-                ),
-              )
-              //     Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     iconData == null
-              //         ? null
-              //         : Icon(
-              //             iconData,
-              //             size: 50.0,
-              //             color: color,
-              //             // color: Colors.white,
-              //           ),
-              //     SizedBox(
-              //       height: 10.0,
-              //     ),
-              //     Padding(
-              //       padding: EdgeInsets.symmetric(horizontal: 0.0),
-              //       child: Text(
-              //         title,
-              //         style: TextStyle(
-              //           fontSize: 17.0,
-              //           color: Colors.white,
-              //           // color: Theme.of(context).primaryColor,
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // ),
+            title: Text(
+              title.toUpperCase(),
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 17.0,
+                color: Colors.white,
+                // color: Theme.of(context).primaryColor,
               ),
+            ),
+          )),
         ),
       ),
     );

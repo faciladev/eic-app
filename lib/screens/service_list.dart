@@ -1,7 +1,6 @@
 import 'package:eicapp/models/service.dart';
 import 'package:eicapp/providers/service.dart';
 import 'package:eicapp/screens/service.dart';
-import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/myListing.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';

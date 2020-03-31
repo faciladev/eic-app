@@ -29,6 +29,19 @@ class NewsProvider extends ChangeNotifier {
     }
   }
 
+  void selectNewsByAttributes(Map<String, dynamic> attributes) async {
+    if (allNews == null) {
+      await fetchAllNews();
+    }
+
+    selectedNews = allNews.singleWhere((news) {
+      return attributes.keys.every((key) {
+        Map<String, dynamic> resource = news.toMap();
+        return resource[key] == attributes[key];
+      });
+    }, orElse: () => null);
+  }
+
   void selectNews(int index) => selectedNews = allNews[index];
   void unselectNews() => selectedNews = null;
 }
