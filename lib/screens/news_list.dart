@@ -1,8 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eicapp/providers/news.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import 'news.dart';
 
@@ -46,12 +46,12 @@ class _NewsListScreenState extends State<NewsListScreen> {
         return ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            Widget image = FadeInImage.memoryNetwork(
+            Widget image = CachedNetworkImage(
+              imageUrl: news.allNews[index].image,
               width: 90.0,
               fit: BoxFit.none,
-              placeholder: kTransparentImage,
-              image: news.allNews[index].image,
             );
+
             return Card(
               child: ListTile(
                 contentPadding:

@@ -16,7 +16,7 @@ class SettingScreen extends StatelessWidget {
       if (model.language == Language.English) {
         label = 'Select Language';
       } else {
-        label = 'Select 语言';
+        label = '语言';
       }
 
       return Page(

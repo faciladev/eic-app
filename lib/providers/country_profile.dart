@@ -99,9 +99,13 @@ class CountryProfileProvider extends ChangeNotifier {
     }
 
     if (allCountryProfiles != null) {
-      selectedCountryProfile = allCountryProfiles.singleWhere((profile) {
-        return profile.name == profileName;
-      }) as CountryProfile;
+      try {
+        selectedCountryProfile = allCountryProfiles.singleWhere((profile) {
+          return profile.name == profileName;
+        }) as CountryProfile;
+      } catch (e) {
+        print(e);
+      }
     }
   }
 

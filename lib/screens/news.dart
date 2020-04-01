@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eicapp/providers/news.dart';
+import 'package:eicapp/util/ui_builder.dart';
 import 'package:eicapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class NewsScreen extends StatefulWidget {
   static final String id = 'news_screen';
@@ -40,10 +41,9 @@ class _NewsScreenState extends State<NewsScreen> {
                   floating: true,
                   expandedHeight: 200,
                   flexibleSpace: Container(
-                    child: FadeInImage.memoryNetwork(
+                    child: CachedNetworkImage(
+                      imageUrl: model.selectedNews.image,
                       fit: BoxFit.cover,
-                      placeholder: kTransparentImage,
-                      image: model.selectedNews.image,
                     ),
                   ),
                 ),
@@ -53,13 +53,6 @@ class _NewsScreenState extends State<NewsScreen> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // Container(
-                          //   child: FadeInImage.memoryNetwork(
-                          //     fit: BoxFit.fitWidth,
-                          //     placeholder: kTransparentImage,
-                          //     image: model.selectedNews.image,
-                          //   ),
-                          // ),
                           SizedBox(
                             height: 17,
                           ),
@@ -69,30 +62,28 @@ class _NewsScreenState extends State<NewsScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  model.selectedNews.title,
-                                  style: Theme.of(context).textTheme.headline,
-                                ),
-                                SizedBox(
-                                  height: 17,
-                                ),
-                                Text(
-                                  model.selectedNews.published,
-                                  style: Theme.of(context).textTheme.subtitle,
-                                ),
-                                SizedBox(
-                                  height: 17,
-                                ),
-                                Text(
-                                  model.selectedNews.content,
-                                  style: TextStyle(
-                                    fontFamily: Theme.of(context)
-                                        .textTheme
-                                        .title
-                                        .fontFamily,
-                                    fontSize: 16,
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text(
+                                    model.selectedNews.title,
+                                    style: Theme.of(context).textTheme.headline,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 17,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text(
+                                    model.selectedNews.published,
+                                    style: Theme.of(context).textTheme.subtitle,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 17,
+                                ),
+                                buildNestedContent(
+                                    model.selectedNews.content, context)
                               ],
                             ),
                           ),

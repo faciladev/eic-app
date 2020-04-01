@@ -5,7 +5,7 @@ class News {
   final String image;
   final String title;
   final String url;
-  final String content;
+  final dynamic content;
   final String published;
 
   News(
@@ -30,8 +30,8 @@ class News {
   factory News.fromJson(Map<String, dynamic> json) {
     return News(
       id: json['id'],
-      content: json['content'].join('\n\n'),
-      image: 'http://www.investethiopia.gov.et' + json['image'],
+      content: json['content'],
+      image: json['image'],
       published: DateFormat.yMMMd().format(DateTime.parse(json['published'])),
       title: json['title'],
       url: json['url'],

@@ -211,12 +211,12 @@ class _HomeScreenState extends State<HomeScreen> {
             if (title == "Get Started") {
               Navigator.pushNamed(context, CountryProfileScreen.id,
                   arguments: <String, String>{
-                    "profileName": title,
+                    "name": title,
                   });
             } else if (title == "Opportunities") {
               Navigator.pushNamed(context, CountryProfileScreen.id,
                   arguments: <String, String>{
-                    "profileName": "Growth Sectors and Opportunities",
+                    "name": "Growth Sectors and Opportunities",
                   });
             } else {
               Navigator.pushNamed(context, screenId);
