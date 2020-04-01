@@ -36,9 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<ChinesePageProvider>(context, listen: false)
           .fetchAllChinesePages();
     }
-    if (Provider.of<SlideProvider>(context, listen: false).slides == null) {
-      Provider.of<SlideProvider>(context, listen: false).fetchSlides();
-    }
+    Provider.of<SlideProvider>(context, listen: false).fetchSlides();
   }
 
   @override
@@ -260,10 +258,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   title.toUpperCase(),
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    fontSize: 17.0,
-                    color: Colors.white,
-                    // color: Theme.of(context).primaryColor,
-                  ),
+                      fontSize: 17.0,
+                      color: Colors.white,
+                      fontFamily:
+                          Theme.of(context).primaryTextTheme.title.fontFamily
+                      // color: Theme.of(context).primaryColor,
+                      ),
                 ),
               ],
             ),
