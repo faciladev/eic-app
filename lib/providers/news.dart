@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:convert' show json, jsonDecode, utf8;
 
 import 'package:eicapp/providers/config_profider.dart';
 import 'package:flutter/foundation.dart';
@@ -21,8 +21,12 @@ class NewsProvider extends ChangeNotifier {
     final response = await http.get(url + 'news?format=json');
 
     if (response.statusCode == 200) {
-      allNews =
-          jsonDecode(response.body).map((json) => News.fromJson(json)).toList();
+      allNews = json
+          .decode(utf8.decode(response.bodyBytes))
+          .map((json) => News.fromJson(json))
+          .toList();
+      // allNews =
+      //     jsonDecode(response.body).map((json) => News.fromJson(json)).toList();
       notifyListeners();
     } else {
       throw Exception('Failed to load news');

@@ -20,7 +20,8 @@ class SectorProvider extends ChangeNotifier {
     final response = await http.get(url + 'sectors?format=json');
 
     if (response.statusCode == 200) {
-      allSectors = jsonDecode(response.body)
+      allSectors = json
+          .decode(utf8.decode(response.bodyBytes))
           .map((json) => Sector.fromJson(json))
           .toList();
       notifyListeners();

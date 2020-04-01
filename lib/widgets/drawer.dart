@@ -210,12 +210,12 @@ class MyDrawer extends StatelessWidget {
         if (itemName == "Get Started") {
           Navigator.pushNamed(context, CountryProfileScreen.id,
               arguments: <String, String>{
-                "profileName": itemName,
+                "name": itemName,
               });
         } else if (itemName == "Opportunities") {
           Navigator.pushNamed(context, CountryProfileScreen.id,
               arguments: <String, String>{
-                "profileName": "Growth Sectors and Opportunities",
+                "name": "Growth Sectors and Opportunities",
               });
         } else {
           Navigator.pushNamed(context, screenId);

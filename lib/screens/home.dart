@@ -223,27 +223,51 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
           child: Container(
-              // height: 120,
-              // padding: EdgeInsets.symmetric(horizontal: 50.0),
-              child: ListTile(
-            leading: iconData == null
-                ? null
-                : Icon(
-                    iconData,
-                    size: 30.0,
-                    color: color,
-                    // color: Colors.white,
+            height: 50,
+            // padding: EdgeInsets.symmetric(horizontal: 50.0),
+            // child: ListTile(
+            //   leading: iconData == null
+            //       ? null
+            //       : Icon(
+            //           iconData,
+            //           size: 30.0,
+            //           color: color,
+            //           // color: Colors.white,
+            //         ),
+            // title: Text(
+            //   title.toUpperCase(),
+            //   textAlign: TextAlign.left,
+            //   style: TextStyle(
+            //     fontSize: 17.0,
+            //     color: Colors.white,
+            //     // color: Theme.of(context).primaryColor,
+            //   ),
+            // ),
+            // ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // Icon(
+                //   iconData,
+                //   size: 30.0,
+                //   color: color,
+                // ),
+                // SizedBox(
+                //   width: 15,
+                // ),
+                Text(
+                  title.toUpperCase(),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    color: Colors.white,
+                    // color: Theme.of(context).primaryColor,
                   ),
-            title: Text(
-              title.toUpperCase(),
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 17.0,
-                color: Colors.white,
-                // color: Theme.of(context).primaryColor,
-              ),
+                ),
+              ],
             ),
-          )),
+          ),
         ),
       ),
     );

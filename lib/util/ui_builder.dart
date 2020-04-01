@@ -99,6 +99,7 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
       } catch (e) {
         //Check if node is a String
         String stringData = node;
+        if (stringData == null) stringData = '';
 
         if (stringData.startsWith('__title__')) {
           stringData = stringData.replaceFirst('__title__', '');
@@ -246,7 +247,7 @@ List<Widget> buildListChildren(value) {
     return ListTile(
       dense: true,
       leading: Icon(
-        Icons.arrow_forward_ios,
+        Icons.chevron_right,
         size: 18.0,
       ),
       title: SelectableText(

@@ -34,7 +34,8 @@ class SlideProvider extends ChangeNotifier {
         Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
     final response = await http.get(url + 'slides?format=json');
     if (response.statusCode == 200) {
-      slides = jsonDecode(response.body)
+      slides = json
+          .decode(utf8.decode(response.bodyBytes))
           .map((json) => Slide.fromJson(json))
           .toList();
       notifyListeners();

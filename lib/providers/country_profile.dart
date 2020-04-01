@@ -30,7 +30,8 @@ class CountryProfileProvider extends ChangeNotifier {
     if (allCountryProfiles != null) return;
     final response = await http.get(url + 'country-profiles?format=json');
     if (response.statusCode == 200) {
-      allCountryProfiles = jsonDecode(response.body)
+      allCountryProfiles = json
+          .decode(utf8.decode(response.bodyBytes))
           .map((json) => CountryProfile.fromJson(json))
           .toList();
 

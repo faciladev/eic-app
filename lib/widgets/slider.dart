@@ -19,7 +19,8 @@ import 'package:eicapp/providers/slider.dart';
 class MySlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<SlideProvider>(context).slides == null) {
+    if (Provider.of<SlideProvider>(context).slides == null ||
+        Provider.of<SlideProvider>(context).slides.length == 0) {
       return Container();
     }
 

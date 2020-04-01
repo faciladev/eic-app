@@ -71,12 +71,19 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Optima
+    # - family: Optima
+    #   fonts:
+    #     - asset: assets/fonts/Optima-Regular.ttf
+    #     - asset: assets/fonts/Optima-Italic.ttf
+    #       style: italic
+    #     - asset: assets/fonts/Optima-Bold.ttf
+
+    - family: Open Sans
       fonts:
-        - asset: assets/fonts/Optima-Regular.ttf
-        - asset: assets/fonts/Optima-Italic.ttf
+        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans-Italic.ttf
           style: italic
-        - asset: assets/fonts/Optima-Bold.ttf
+        - asset: assets/fonts/OpenSans-Bold.ttf
 
 
 

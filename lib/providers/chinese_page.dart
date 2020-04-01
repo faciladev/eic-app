@@ -21,7 +21,8 @@ class ChinesePageProvider extends ChangeNotifier {
     final response = await http.get(url + 'chinesepages?format=json');
 
     if (response.statusCode == 200) {
-      allChinesePages = jsonDecode(utf8.decode(response.bodyBytes))
+      allChinesePages = json
+          .decode(utf8.decode(response.bodyBytes))
           .map((json) => ChinesePage.fromJson(json))
           .toList();
       notifyListeners();

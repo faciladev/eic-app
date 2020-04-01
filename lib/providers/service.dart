@@ -20,7 +20,8 @@ class ServiceProvider extends ChangeNotifier {
     final response = await http.get(url + 'services?format=json');
 
     if (response.statusCode == 200) {
-      allServices = jsonDecode(response.body)
+      allServices = json
+          .decode(utf8.decode(response.bodyBytes))
           .map((json) => Service.fromJson(json))
           .toList();
       notifyListeners();

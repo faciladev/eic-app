@@ -22,7 +22,8 @@ class IncentiveProvider extends ChangeNotifier {
         Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
     final response = await http.get(url + 'incentives?format=json');
     if (response.statusCode == 200) {
-      allIncentives = jsonDecode(response.body)
+      allIncentives = json
+          .decode(utf8.decode(response.bodyBytes))
           .map((json) => Incentive.fromJson(json))
           .toList();
       allIncentives.forEach((incentive) {
