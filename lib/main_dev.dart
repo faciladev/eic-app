@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 import 'package:eicapp/screens/language.dart';
 import 'package:eicapp/screens/news_list.dart';
 import 'package:eicapp/screens/feedback.dart';
-import 'package:eicapp/env/prod.dart'; //exports config variable
+import 'package:eicapp/env/dev.dart'; //exports config variable
 
 void main() => runApp(
       MultiProvider(
