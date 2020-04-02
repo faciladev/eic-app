@@ -1,4 +1,4 @@
-import 'dart:convert' show json, jsonDecode, utf8;
+import 'dart:convert' show json, utf8;
 
 import 'package:eicapp/providers/config_profider.dart';
 import 'package:flutter/foundation.dart';
@@ -10,25 +10,42 @@ import 'package:provider/provider.dart';
 class NewsProvider extends ChangeNotifier {
   List<dynamic> allNews;
   News selectedNews;
+  bool isLoading = false;
+  String next, prev;
+  int count;
 
   final BuildContext context;
 
   NewsProvider({this.context});
 
   Future<void> fetchAllNews() async {
-    String url =
-        Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
-    final response = await http.get(url + 'news?format=json');
+    isLoading = true;
+    String url = next;
+    if (next == null) {
+      String baseUrl =
+          Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
+      url = baseUrl + 'news?format=json';
+    }
+
+    final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      allNews = json
-          .decode(utf8.decode(response.bodyBytes))
-          .map((json) => News.fromJson(json))
-          .toList();
-      // allNews =
-      //     jsonDecode(response.body).map((json) => News.fromJson(json)).toList();
+      dynamic responseBody = json.decode(utf8.decode(response.bodyBytes));
+      List<dynamic> results = responseBody['results'];
+      List<dynamic> newsListing =
+          results.map((json) => News.fromJson(json)).toList();
+      if (next != null && allNews != null) {
+        allNews.addAll(newsListing);
+      } else {
+        allNews = newsListing;
+      }
+      next = responseBody['next'];
+      prev = responseBody['previous'];
+      count = responseBody['count'];
+      isLoading = false;
       notifyListeners();
     } else {
+      isLoading = false;
       throw Exception('Failed to load news');
     }
   }

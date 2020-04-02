@@ -43,33 +43,43 @@ class _NewsListScreenState extends State<NewsListScreen> {
         if (news.allNews == null) {
           return Center(child: CircularProgressIndicator());
         }
-        return ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            Widget image = CachedNetworkImage(
-              imageUrl: news.allNews[index].image,
-              width: 90.0,
-              fit: BoxFit.none,
-            );
-
-            return Card(
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                subtitle: Text(news.allNews[index].published),
-                leading: image,
-                title: Text(
-                  news.allNews[index].title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => _selectNews(index),
-              ),
-            );
+        return NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification scrollInfo) {
+            if (!news.isLoading &&
+                scrollInfo.metrics.pixels ==
+                    scrollInfo.metrics.maxScrollExtent) {
+              news.fetchAllNews();
+            }
+            return true;
           },
-          itemCount: news.allNews.length,
+          child: ListView.builder(
+            physics: AlwaysScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              Widget image = CachedNetworkImage(
+                imageUrl: news.allNews[index].image,
+                width: 90.0,
+                fit: BoxFit.none,
+              );
+
+              return Card(
+                child: ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                  subtitle: Text(news.allNews[index].published),
+                  leading: image,
+                  title: Text(
+                    news.allNews[index].title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: Icon(Icons.navigate_next),
+                  onTap: () => _selectNews(index),
+                ),
+              );
+            },
+            itemCount: news.allNews.length,
+          ),
         );
       },
     );
