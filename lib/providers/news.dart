@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:eicapp/models/news.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class NewsProvider extends ChangeNotifier {
@@ -47,6 +48,24 @@ class NewsProvider extends ChangeNotifier {
     } else {
       isLoading = false;
       throw Exception('Failed to load news');
+    }
+  }
+
+  void selectNewsById(int id) async {
+    String baseUrl =
+        Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
+    String url = baseUrl + 'news/$id?format=json';
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      dynamic responseBody = json.decode(utf8.decode(response.bodyBytes));
+      selectedNews = News.fromJson(responseBody);
+
+      isLoading = false;
+      notifyListeners();
+    } else {
+      isLoading = false;
+      throw Exception('Failed to load this news');
     }
   }
 

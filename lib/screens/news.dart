@@ -18,7 +18,7 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
     if (args != null) {
-      Provider.of<NewsProvider>(context).selectNewsByAttributes(args);
+      Provider.of<NewsProvider>(context).selectNewsById(args['id']);
     }
 
     if (Provider.of<NewsProvider>(context).selectedNews == null) {
