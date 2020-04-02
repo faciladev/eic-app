@@ -4,6 +4,8 @@ class Config {
   final String env;
   final bool production;
   final String apiBase;
+  final String twitterUrl = 'https://twitter.com/EthioInvestment';
+  final String facebookUrl = 'https://fb.me/InvestEthiopia';
 
   Config({this.env, this.production, this.apiBase});
 }

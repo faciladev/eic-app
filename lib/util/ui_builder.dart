@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart' show canLaunch, launch;
 
 class MyPathClipper extends CustomClipper<Path> {
   final double height1;
@@ -111,14 +113,15 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
             continue;
           }
           body.insert(
-              0,
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  stringData,
-                  style: Theme.of(context).textTheme.title,
-                ),
-              ));
+            0,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                stringData,
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+          );
         } else if (stringData.startsWith('__divider__')) {
           body.insert(
               0,
@@ -143,9 +146,17 @@ Widget buildNestedContent(dynamic root, BuildContext context) {
               ),
             );
           } else {
-            textOrImage = SelectableText(
-              stringData,
+            textOrImage = Linkify(
+              onOpen: (link) async {
+                if (await canLaunch(link.url)) {
+                  await launch(link.url);
+                } else {
+                  throw 'Could not launch $link';
+                }
+              },
+              text: stringData,
               style: Theme.of(context).textTheme.body1,
+              linkStyle: TextStyle(color: Colors.blue),
             );
           }
           body.insert(
@@ -245,16 +256,23 @@ List<Widget> buildListChildren(value) {
   List<dynamic> lists = value;
   List<Widget> children = lists.map((list) {
     return ListTile(
-      dense: true,
-      leading: Icon(
-        Icons.chevron_right,
-        size: 18.0,
-      ),
-      title: SelectableText(
-        list,
-        style: TextStyle(fontSize: 18),
-      ),
-    );
+        dense: true,
+        leading: Icon(
+          Icons.chevron_right,
+          size: 18.0,
+        ),
+        title: Linkify(
+          onOpen: (link) async {
+            if (await canLaunch(link.url)) {
+              await launch(link.url);
+            } else {
+              throw 'Could not launch $link';
+            }
+          },
+          text: list,
+          style: TextStyle(fontSize: 18),
+          linkStyle: TextStyle(color: Colors.blue),
+        ));
   }).toList();
   return children;
 }

@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:eicapp/models/feedback.dart';
+import 'package:eicapp/providers/config_profider.dart';
 import 'package:eicapp/providers/feedback.dart';
 import 'package:eicapp/widgets/myappbar.dart';
 import 'package:eicapp/widgets/page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart' show canLaunch, launch;
 
 class FeedbackScreen extends StatefulWidget {
   static final String id = 'feedback_screen';
@@ -96,6 +99,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String twitterUrl = Provider.of<ConfigProvider>(context).config.twitterUrl;
+    String facebookUrl =
+        Provider.of<ConfigProvider>(context).config.facebookUrl;
     Widget addressContent = Container(
       margin: EdgeInsets.all(20.0),
       child: Column(
@@ -109,7 +115,16 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   SelectableText('P.O. Box 2313'),
                   SelectableText('Tel: +251 11 551 0033'),
                   SelectableText('Fax: +251 11 551 4396'),
-                  SelectableText('Email: info@ethio-invest.com'),
+                  Linkify(
+                    onOpen: (link) async {
+                      if (await canLaunch(link.url)) {
+                        await launch(link.url);
+                      } else {
+                        throw 'Could not launch $link';
+                      }
+                    },
+                    text: 'Email: info@ethio-invest.com',
+                  ),
                 ],
               ),
             ],
@@ -129,12 +144,16 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       SizedBox(
                         width: 10.0,
                       ),
-                      SelectableText(
-                        '@EthioInvestment',
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                      )
+                      Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunch(twitterUrl)) {
+                            await launch(twitterUrl);
+                          } else {
+                            throw 'Could not launch $twitterUrl';
+                          }
+                        },
+                        text: twitterUrl,
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -149,12 +168,19 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       SizedBox(
                         width: 10.0,
                       ),
-                      Text(
-                        'InvestEthiopia',
-                        style: TextStyle(
+                      Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunch(facebookUrl)) {
+                            await launch(facebookUrl);
+                          } else {
+                            throw 'Could not launch $facebookUrl';
+                          }
+                        },
+                        text: facebookUrl,
+                        linkStyle: TextStyle(
                           color: Colors.blue[900],
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],

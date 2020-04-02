@@ -33,17 +33,23 @@ class _NewsScreenState extends State<NewsScreen> {
           return Future.value(true);
         },
         child: Consumer<NewsProvider>(builder: (context, model, _) {
+          Orientation orientation = MediaQuery.of(context).orientation;
+          Size size = MediaQuery.of(context).size;
+          double heightPercent =
+              orientation == Orientation.landscape ? 0.6 : 0.4;
+          double appBarHeight = size.height * heightPercent;
           return SafeArea(
             top: true,
             child: CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
                   floating: true,
-                  expandedHeight: 200,
+                  expandedHeight: appBarHeight,
                   flexibleSpace: Container(
                     child: CachedNetworkImage(
                       imageUrl: model.selectedNews.image,
                       fit: BoxFit.cover,
+                      height: appBarHeight,
                     ),
                   ),
                 ),
