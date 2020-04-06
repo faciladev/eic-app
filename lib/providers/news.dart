@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:eicapp/models/news.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class NewsProvider extends ChangeNotifier {
@@ -52,6 +51,15 @@ class NewsProvider extends ChangeNotifier {
   }
 
   void selectNewsById(int id) async {
+    if (allNews != null) {
+      News news = allNews.firstWhere((news) => news.id == id);
+      if (news != null) {
+        selectedNews = news;
+        isLoading = false;
+        notifyListeners();
+        return;
+      }
+    }
     String baseUrl =
         Provider.of<ConfigProvider>(context, listen: false).config.apiBase;
     String url = baseUrl + 'news/$id?format=json';
@@ -60,6 +68,11 @@ class NewsProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       dynamic responseBody = json.decode(utf8.decode(response.bodyBytes));
       selectedNews = News.fromJson(responseBody);
+      if (allNews == null) {
+        allNews = [selectedNews];
+      } else {
+        allNews.add(selectedNews);
+      }
 
       isLoading = false;
       notifyListeners();
