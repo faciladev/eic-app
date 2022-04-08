@@ -1,16 +1,7 @@
-# invest_ethiopia
+# Invest in Ethiopia
 
-A new Flutter application.
+A flutter mobile app that consumes investment data for the country of Ethiopia which is scraped from four different websites by another project (https://github.com/faciladev/eic-web-scraper) using a REST API project (https://github.com/faciladev/eic-rest-api). 
 
-## Getting Started
+## Play Store
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://play.google.com/store/apps/details?id=com.fasilhailu.invest_ethiopia
